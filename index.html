@@ -14,6 +14,7 @@ body {
   background: #f2f2f2;
 }
 
+/* ETIQUETA */
 .etiqueta {
   width: 60mm;
   height: 40mm;
@@ -30,20 +31,35 @@ body {
 .topo {
   display: flex;
   justify-content: space-between;
-  font-weight: bold;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+#produto {
+  font-weight: 800;
   font-size: 13px;
 }
 
-/* LINHAS */
-.linha {
-  display: flex;
-  justify-content: space-between;
+#peso {
+  font-weight: bold;
+  font-size: 12px;
+}
+
+/* TABELA */
+.tabela {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  row-gap: 2px;
   font-size: 9px;
-  margin: 1px 0;
 }
 
 .label {
   font-weight: bold;
+}
+
+.valor {
+  text-align: right;
+  min-width: 70px;
 }
 
 /* RODAPÉ */
@@ -59,10 +75,15 @@ body {
   line-height: 1.2;
 }
 
+.lote-conf {
+  font-weight: bold;
+  margin-top: 2px;
+}
+
 /* QR */
 .qrcode {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
 }
 
 /* BOTÃO */
@@ -77,6 +98,7 @@ button {
   cursor: pointer;
 }
 
+/* IMPRESSÃO */
 @media print {
   button { display: none; }
   body { background: white; }
@@ -93,22 +115,24 @@ button {
     <div id="peso"></div>
   </div>
 
-  <div>
-    <div class="linha"><span class="label">CONSERVAR:</span><span id="conservacao"></span></div>
-    <div class="linha"><span class="label">VAL. ORIGINAL:</span><span id="val_original"></span></div>
-    <div class="linha"><span class="label">MANIPULAÇÃO:</span><span id="manipulacao"></span></div>
-    <div class="linha"><span class="label">VALIDADE:</span><span id="validade"></span></div>
-    <div class="linha"><span class="label">MARCA / FORN.:</span><span id="marca"></span></div>
-    <div class="linha"><span class="label">SIF:</span><span id="sif"></span></div>
-    <div class="linha"><span class="label">LOTE:</span><span id="lote"></span></div>
+  <div class="tabela">
+    <div class="label">CONSERVAR:</div><div class="valor" id="conservacao"></div>
+    <div class="label">VAL. ORIGINAL:</div><div class="valor" id="val_original"></div>
+    <div class="label">MANIPULAÇÃO:</div><div class="valor" id="manipulacao"></div>
+    <div class="label">VALIDADE:</div><div class="valor" id="validade"></div>
+    <div class="label">MARCA / FORN.:</div><div class="valor" id="marca"></div>
+    <div class="label">SIF:</div><div class="valor" id="sif"></div>
+    <div class="label">LOTE:</div><div class="valor" id="lote"></div>
   </div>
 
   <div class="rodape">
     <div class="info">
       RESP.: <span id="resp"></span><br>
       CURVELLO CONFEITARIA<br>
-      <strong>LOTE CONFEITARIA:</strong><br>
-      <span id="lc"></span>
+      <div class="lote-conf">
+        LOTE CONFEITARIA:<br>
+        <span id="lc"></span>
+      </div>
     </div>
 
     <img id="qr" class="qrcode">
@@ -121,47 +145,42 @@ button {
 <script>
 const params = new URLSearchParams(window.location.search);
 
-// 👉 DADOS PADRÃO (se abrir sem Glide)
-const dadosPadrao = {
-  produto: "LEITE INTEGRAL",
-  peso: "1L",
-  conservacao: "RESFRIADO",
-  val_original: "10/08/2026",
-  manipulacao: "06/03/2026 13:30",
-  validade: "10/03/2026 13:30",
-  marca: "NESTLE",
+// dados padrão (para teste)
+const d = {
+  produto: "Leite Integral",
+  peso: "1kg",
+  conservacao: "Resfriado",
+  val_original: "18/04/2026 20:00",
+  manipulacao: "18/03/2026 00:29",
+  validade: "21/03/2026 00:29",
+  marca: "Nestle",
   sif: "2025",
   lote: "HJ6782",
-  resp: "LUIZ",
-  lc: "31411"
+  resp: "Luiz",
+  lc: "001"
 };
 
-// FUNÇÃO
 function set(id, param) {
-  let valor = params.get(param);
-
-  // se não veio do Glide → usa padrão
-  if (!valor) valor = dadosPadrao[param];
-
-  document.getElementById(id).innerText = valor || "";
+  document.getElementById(id).innerText =
+    params.get(param) || d[param] || "";
 }
 
-// CAMPOS
-set("produto", "produto");
-set("peso", "peso");
-set("conservacao", "conservacao");
-set("val_original", "val_original");
-set("manipulacao", "manipulacao");
-set("validade", "validade");
-set("marca", "marca");
-set("sif", "sif");
-set("lote", "lote");
-set("resp", "resp");
-set("lc", "lc");
+set("produto","produto");
+set("peso","peso");
+set("conservacao","conservacao");
+set("val_original","val_original");
+set("manipulacao","manipulacao");
+set("validade","validade");
+set("marca","marca");
+set("sif","sif");
+set("lote","lote");
+set("resp","resp");
+set("lc","lc");
 
 // QR
 document.getElementById("qr").src =
-  "https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" + encodeURIComponent(window.location.href);
+  "https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" +
+  encodeURIComponent(window.location.href);
 </script>
 
 </body>
