@@ -82,24 +82,24 @@ button {
 <div class="etiqueta">
 
   <div class="topo">
-    <div class="produto" id="produto">Produto</div>
+    <div class="produto" id="produto">-</div>
     <div class="volume" id="volume">1L</div>
   </div>
 
   <div class="linhas">
-    <div><b>CONSERVAR:</b> <span id="conservacao"></span></div>
-    <div><b>VAL. ORIGINAL:</b> <span id="val_original"></span></div>
-    <div><b>MANIPULAÇÃO:</b> <span id="manipulacao"></span></div>
-    <div><b>VALIDADE:</b> <span id="validade"></span></div>
-    <div><b>MARCA / FORN.:</b> <span id="marca"></span></div>
-    <div><b>SIF:</b> <span id="sif"></span></div>
-    <div><b>LOTE:</b> <span id="lote"></span></div>
+    <div><b>CONSERVAR:</b> <span id="conservacao">-</span></div>
+    <div><b>VAL. ORIGINAL:</b> <span id="val_original">-</span></div>
+    <div><b>MANIPULAÇÃO:</b> <span id="manipulacao">-</span></div>
+    <div><b>VALIDADE:</b> <span id="validade">-</span></div>
+    <div><b>MARCA / FORN.:</b> <span id="marca">-</span></div>
+    <div><b>SIF:</b> <span id="sif">-</span></div>
+    <div><b>LOTE:</b> <span id="lote">-</span></div>
   </div>
 
   <div class="rodape">
-    <div>RESP.: <span id="responsavel"></span></div>
+    <div>RESP.: <span id="responsavel">-</span></div>
     <div>CURVELLO CONFEITARIA</div>
-    <div><b>LOTE CONFEITARIA: <span id="lote_conf"></span></b></div>
+    <div><b>LOTE CONFEITARIA: <span id="lote_conf">-</span></b></div>
   </div>
 
   <img id="qr" class="qrcode">
@@ -109,7 +109,7 @@ button {
 <button onclick="window.print()">Imprimir etiqueta</button>
 
 <script>
-// pegar parâmetros da URL
+// pegar parâmetros
 const params = new URLSearchParams(window.location.search);
 
 // preencher dados
@@ -125,8 +125,11 @@ document.getElementById("lote").textContent = params.get("lote") || "-";
 document.getElementById("responsavel").textContent = params.get("resp") || "-";
 document.getElementById("lote_conf").textContent = params.get("lote_conf") || "-";
 
-// QR CODE (LEVE E FUNCIONAL)
-const qrUrl = window.location.origin + window.location.pathname + "?id=" + (params.get("lote_conf") || "001");
+// QR CODE CORRIGIDO (leve)
+const qrUrl =
+  window.location.origin +
+  window.location.pathname +
+  "?id=" + (params.get("lote_conf") || "001");
 
 document.getElementById("qr").src =
   "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" +
