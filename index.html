@@ -16,13 +16,13 @@ body {
     margin-top: 40px;
 }
 
-/* ETIQUETA */
+/* ETIQUETA (SEU LAYOUT ORIGINAL) */
 .etiqueta {
     width: 420px;
     background: #fff;
     border: 4px solid #000;
     border-radius: 25px;
-    padding: 20px;
+    padding: 20px 22px;
     position: relative;
 }
 
@@ -33,60 +33,60 @@ body {
 }
 
 .produto {
-    font-size: 24px;
+    font-size: 26px;
     font-weight: bold;
     margin-bottom: 12px;
 }
 
 .volume {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: bold;
 }
 
-/* CONTEUDO */
+/* CONTEÚDO */
 .conteudo {
     display: flex;
 }
 
 /* COLUNA ESQUERDA */
 .col-esq {
-    width: 190px; /* TRAVA SAFARI */
+    width: 190px;
     font-size: 14px;
-    line-height: 1.5;
+    line-height: 1.4;
 }
 
 /* COLUNA DIREITA */
 .col-dir {
-    width: 160px; /* TRAVA SAFARI */
+    width: 180px;
     font-size: 14px;
-    line-height: 1.5;
+    line-height: 1.4;
     text-align: left;
 }
 
-/* RODAPE */
+/* RODAPÉ */
 .rodape {
-    margin-top: 10px;
+    margin-top: 12px;
     font-size: 14px;
 }
 
 .lote-conf {
+    margin-top: 6px;
     font-weight: bold;
-    margin-top: 5px;
 }
 
 /* QR */
 .qr {
     position: absolute;
-    right: 20px;
     bottom: 20px;
+    right: 20px;
 }
 
 .qr img {
-    width: 75px;
-    height: 75px;
+    width: 80px;
+    height: 80px;
 }
 
-/* BOTAO */
+/* BOTÃO */
 button {
     margin-top: 25px;
     padding: 18px 40px;
@@ -95,12 +95,13 @@ button {
     border: none;
     background: #333;
     color: white;
+    cursor: pointer;
 }
 
 /* PRINT */
 @media print {
-    button { display: none; }
     body { background: white; }
+    button { display: none; }
 }
 </style>
 </head>
@@ -109,44 +110,44 @@ button {
 
 <div class="etiqueta">
 
-<div class="topo">
-    <div id="produto" class="produto">Produto</div>
-    <div id="volume" class="volume">1L</div>
-</div>
+    <div class="topo">
+        <div id="produto" class="produto">Produto</div>
+        <div id="volume" class="volume">1L</div>
+    </div>
 
-<div class="conteudo">
+    <div class="conteudo">
 
-<div class="col-esq">
-    <div><b>CONSERVAR:</b></div>
-    <div><b>VAL. ORIGINAL:</b></div>
-    <div><b>MANIPULAÇÃO:</b></div>
-    <div><b>VALIDADE:</b></div>
-    <div><b>MARCA / FORN.:</b></div>
-    <div><b>SIF:</b></div>
-    <div><b>LOTE:</b></div>
-</div>
+        <div class="col-esq">
+            <div><b>CONSERVAR:</b></div>
+            <div><b>VAL. ORIGINAL:</b></div>
+            <div><b>MANIPULAÇÃO:</b></div>
+            <div><b>VALIDADE:</b></div>
+            <div><b>MARCA / FORN.:</b></div>
+            <div><b>SIF:</b></div>
+            <div><b>LOTE:</b></div>
+        </div>
 
-<div class="col-dir">
-    <div id="conservacao">Refrigerado</div>
-    <div id="val_original">-</div>
-    <div id="manipulacao">-</div>
-    <div id="validade">-</div>
-    <div id="marca">-</div>
-    <div id="sif">-</div>
-    <div id="lote">-</div>
-</div>
+        <div class="col-dir">
+            <div id="conservacao">Refrigerado</div>
+            <div id="val_original">-</div>
+            <div id="manipulacao">-</div>
+            <div id="validade">-</div>
+            <div id="marca">-</div>
+            <div id="sif">-</div>
+            <div id="lote">-</div>
+        </div>
 
-</div>
+    </div>
 
-<div class="rodape">
-    <div id="resp">RESP.: Luiz</div>
-    <div>CURVELLO CONFEITARIA</div>
-    <div id="lc" class="lote-conf">LOTE CONFEITARIA: -</div>
-</div>
+    <div class="rodape">
+        <div id="resp">RESP.: Luiz</div>
+        <div>CURVELLO CONFEITARIA</div>
+        <div id="lc" class="lote-conf">LOTE CONFEITARIA: 000</div>
+    </div>
 
-<div class="qr">
-    <img id="qrcode">
-</div>
+    <div class="qr">
+        <img id="qrcode">
+    </div>
 
 </div>
 
@@ -154,13 +155,17 @@ button {
 
 <script>
 
-// PEGAR PARAMETROS
+// PEGAR PARAMETROS DO GLIDE
 const p = new URLSearchParams(window.location.search);
 
-// FUNÇÃO SEGURA
+// FUNÇÃO PARA PREENCHER
 function set(id, nome) {
     let v = p.get(nome);
     if (v && v !== "undefined") {
+
+        // REMOVE VÍRGULA DAS DATAS
+        v = v.replace(",", "");
+
         document.getElementById(id).innerText = v;
     }
 }
@@ -168,17 +173,29 @@ function set(id, nome) {
 // CAMPOS
 set("produto","produto");
 set("volume","volume");
-set("conservacao","conservacao");
 set("val_original","val_original");
 set("manipulacao","manipulacao");
 set("validade","validade");
 set("marca","marca");
 set("sif","sif");
 set("lote","lote");
-set("resp","resp");
-set("lc","lc");
 
-// QR
+// CONSERVAÇÃO FIXA
+document.getElementById("conservacao").innerText = "Refrigerado";
+
+// RESP
+let resp = p.get("resp");
+if (resp) {
+    document.getElementById("resp").innerText = "RESP.: " + resp;
+}
+
+// LOTE CONFEITARIA
+let lc = p.get("lc");
+if (lc) {
+    document.getElementById("lc").innerText = "LOTE CONFEITARIA: " + lc;
+}
+
+// QR CODE
 let lote = p.get("lote") || "000";
 
 document.getElementById("qrcode").src =
