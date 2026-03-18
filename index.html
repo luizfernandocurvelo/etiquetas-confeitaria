@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* CONTAINER (ALINHA TUDO) */
+.container {
+  width: 60mm;
+  margin: 20px auto;
+}
+
+/* ETIQUETA 60x40 */
+.label {
+  width: 60mm;
+  height: 40mm;
+  padding: 2mm;
+  box-sizing: border-box;
+  border: 2px solid black;
+  border-radius: 8px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto 1fr;
+  gap: 1mm;
+}
+
+/* TOPO */
+.topo {
+  grid-column: span 2;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: 9px;
+}
+
+/* COLUNAS */
+.esq, .dir {
+  font-size: 7px;
+}
+
+.esq div, .dir div {
+  margin-bottom: 0.5mm;
+}
+
+.dir {
+  text-align: right;
+}
+
+/* RODAPÉ */
+.rodape {
+  grid-column: span 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+/* TEXTO RODAPÉ */
+.info {
+  font-size: 7px;
+}
+
+/* QR */
+.qr img {
+  width: 35px;
+  height: 35px;
+}
+
+/* BOTÃO */
+.botao-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+button {
+  padding: 8px 18px;
+  font-size: 13px;
+  border-radius: 6px;
+  border: none;
+  background-color: #222;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background-color: #444;
+}
+
+/* NÃO IMPRIMIR */
+@media print {
+  .no-print {
+    display: none;
+  }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="label">
+
+    <!-- TOPO -->
+    <div class="topo">
+      <div id="produto">LEITE INTEGRAL</div>
+      <div id="peso">1L</div>
+    </div>
+
+    <!-- ESQUERDA -->
+    <div class="esq">
+      <div>CONSERVAR:</div>
+      <div>VAL. ORIGINAL:</div>
+      <div>MANIPULAÇÃO:</div>
+      <div>VALIDADE:</div>
+      <div>MARCA / FORN.:</div>
+      <div>SIF:</div>
+      <div>LOTE:</div>
+    </div>
+
+    <!-- DIREITA -->
+    <div class="dir">
+      <div id="conservacao">RESFRIADO</div>
+      <div id="val_original">10/08/2026</div>
+      <div id="manipulacao">06/03/2026 13:30</div>
+      <div id="validade">10/03/2026 13:30</div>
+      <div id="marca">NESTLE</div>
+      <div id="sif">2025</div>
+      <div id="lote">HJ6782</div>
+    </div>
+
+    <!-- RODAPÉ -->
+    <div class="rodape">
+      <div class="info">
+        <div>RESP.: <span id="resp">LUIZ</span></div>
+        <div>CURVELLO CONFEITARIA</div>
+
+        <!-- ESPAÇO EXTRA -->
+        <div style="margin-top: 2mm;">
+          LOTE CONFEITARIA: <span id="lc">31411</span>
+        </div>
+      </div>
+
+      <div class="qr">
+        <img id="qr" src="">
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTÃO -->
+  <div class="no-print botao-container">
+    <button onclick="window.print()">Imprimir etiqueta</button>
+  </div>
+
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+
+function preencher() {
+  document.getElementById("produto").innerText =
+    params.get("produto") || "LEITE INTEGRAL";
+
+  document.getElementById("peso").innerText =
+    params.get("peso") || "1L";
+
+  document.getElementById("conservacao").innerText =
+    params.get("conservacao") || "RESFRIADO";
+
+  document.getElementById("val_original").innerText =
+    params.get("val_original") || "10/08/2026";
+
+  document.getElementById("manipulacao").innerText =
+    params.get("manipulacao") || "06/03/2026 13:30";
+
+  document.getElementById("validade").innerText =
+    params.get("validade") || "10/03/2026 13:30";
+
+  document.getElementById("marca").innerText =
+    params.get("marca") || "NESTLE";
+
+  document.getElementById("sif").innerText =
+    params.get("sif") || "2025";
+
+  document.getElementById("lote").innerText =
+    params.get("lote") || "HJ6782";
+
+  document.getElementById("resp").innerText =
+    params.get("resp") || "LUIZ";
+
+  document.getElementById("lc").innerText =
+    params.get("lc") || "31411";
+
+  const qrData = params.toString() || "teste";
+
+  document.getElementById("qr").src =
+    "https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=" + qrData;
+}
+
+window.onload = function () {
+  preencher();
+
+  setTimeout(() => {
+    window.print();
+  }, 400);
+};
+</script>
+
+</body>
+</html>
