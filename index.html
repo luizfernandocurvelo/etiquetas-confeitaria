@@ -71,10 +71,10 @@ body {
 
 .qrcode {
   position: absolute;
-  right: 5mm;
-  bottom: 1.5mm;
-  width: 42px;
-  height: 42px;
+  right: 3mm;
+  bottom: 1.5mm; /* 👈 ajustado (mais pra baixo como você pediu) */
+  width: 30px;
+  height: 30px;
 }
 
 button {
@@ -105,26 +105,26 @@ button {
 <div class="etiqueta">
 
   <div class="topo">
-    <div id="produto">Leite Integral</div>
+    <div id="produto">Produto</div>
     <div id="volume">1L</div>
   </div>
 
   <div class="conteudo">
-    <div class="label">CONSERVAR:</div><div class="valor" id="conservacao">Refrigerado</div>
-    <div class="label">VAL. ORIGINAL:</div><div class="valor" id="val_original">10/08/2026</div>
-    <div class="label">MANIPULAÇÃO:</div><div class="valor" id="manipulacao">06/03/2026 13:30</div>
-    <div class="label">VALIDADE:</div><div class="valor" id="validade">10/03/2026 13:30</div>
-    <div class="label">MARCA / FORN.:</div><div class="valor" id="marca">Nestle</div>
-    <div class="label">SIF:</div><div class="valor" id="sif">2025</div>
-    <div class="label">LOTE:</div><div class="valor" id="lote">HJ6782</div>
+    <div class="label">CONSERVAR:</div><div class="valor">Refrigerado</div>
+    <div class="label">VAL. ORIGINAL:</div><div class="valor" id="val_original"></div>
+    <div class="label">MANIPULAÇÃO:</div><div class="valor" id="manipulacao"></div>
+    <div class="label">VALIDADE:</div><div class="valor" id="validade"></div>
+    <div class="label">MARCA / FORN.:</div><div class="valor" id="marca"></div>
+    <div class="label">SIF:</div><div class="valor" id="sif"></div>
+    <div class="label">LOTE:</div><div class="valor" id="lote"></div>
   </div>
 
   <div class="rodape">
-    <div id="resp">RESP.: Luiz</div>
+    RESP.: <span id="resp"></span><br>
     CURVELLO CONFEITARIA
 
-    <div class="lote-conf" id="lote_conf">
-      LOTE CONFEITARIA: 31411
+    <div class="lote-conf">
+      LOTE CONFEITARIA: <span id="lote_conf"></span>
     </div>
   </div>
 
@@ -135,35 +135,31 @@ button {
 <button onclick="window.print()">Imprimir etiqueta</button>
 
 <script>
-const p = new URLSearchParams(window.location.search);
+// 🔹 pegar parâmetros da URL
+const params = new URLSearchParams(window.location.search);
 
-function get(nome, padrao="") {
-  return p.get(nome) || padrao;
+// 🔹 função para remover vírgula das datas
+function formatarData(valor) {
+  if (!valor) return "-";
+  return valor.replace(",", "");
 }
 
-document.getElementById("produto").innerText = get("produto", "Leite Integral");
-document.getElementById("volume").innerText = get("volume", "1L");
+// 🔹 preencher dados
+document.getElementById("produto").textContent = params.get("produto") || "-";
+document.getElementById("volume").textContent = params.get("volume") || "1L";
 
-// FIXO
-document.getElementById("conservacao").innerText = "Refrigerado";
+document.getElementById("val_original").textContent = formatarData(params.get("val_original"));
+document.getElementById("manipulacao").textContent = formatarData(params.get("manipulacao"));
+document.getElementById("validade").textContent = formatarData(params.get("validade"));
 
-// DADOS
-document.getElementById("val_original").innerText = get("val_original", "10/08/2026");
-document.getElementById("manipulacao").innerText = get("manipulacao", "06/03/2026 13:30");
-document.getElementById("validade").innerText = get("validade", "10/03/2026 13:30");
-document.getElementById("marca").innerText = get("marca", "Nestle");
-document.getElementById("sif").innerText = get("sif", "2025");
-document.getElementById("lote").innerText = get("lote", "HJ6782");
+document.getElementById("marca").textContent = params.get("marca") || "-";
+document.getElementById("sif").textContent = params.get("sif") || "-";
+document.getElementById("lote").textContent = params.get("lote") || "-";
+document.getElementById("resp").textContent = params.get("resp") || "-";
+document.getElementById("lote_conf").textContent = params.get("lote_conf") || "-";
 
-// RODAPÉ
-document.getElementById("resp").innerText = "RESP.: " + get("resp", "Luiz");
-
-document.getElementById("lote_conf").innerText =
-  "LOTE CONFEITARIA: " + get("lote_conf", "31411");
-
-// QR CODE
+// 🔹 QR Code
 const url = window.location.href;
-
 document.getElementById("qr").src =
   "https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" +
   encodeURIComponent(url);
