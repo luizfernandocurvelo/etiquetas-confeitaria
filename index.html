@@ -19,7 +19,7 @@ body {
 .etiqueta {
   width: 60mm;
   height: 40mm;
-  padding: 2.5mm;
+  padding: 3mm;
   border: 2px solid #000;
   border-radius: 6mm;
   background: #fff;
@@ -34,18 +34,18 @@ body {
   display: flex;
   justify-content: space-between;
   font-weight: 700;
-  font-size: 12px;
-  margin-bottom: 2px;
+  font-size: 13px;
+  margin-bottom: 3px;
 }
 
-/* CONTEÚDO */
+/* GRID PRINCIPAL */
 .conteudo {
   display: grid;
-  grid-template-columns: 1fr 65px; /* 👈 largura fixa profissional */
-  row-gap: 1px; /* 👈 mais compacto */
+  grid-template-columns: 1fr 60px; /* 👈 trava alinhamento */
+  row-gap: 2px;
   column-gap: 6px;
-  font-size: 8.2px;
-  line-height: 1.15;
+  font-size: 8.5px;
+  line-height: 1.2;
 }
 
 /* LABEL */
@@ -53,7 +53,7 @@ body {
   font-weight: 700;
 }
 
-/* VALOR */
+/* VALORES */
 .valor {
   text-align: right;
   white-space: nowrap;
@@ -62,42 +62,45 @@ body {
 /* RODAPÉ */
 .rodape {
   margin-top: auto;
-  font-size: 7.5px;
-  line-height: 1.15;
+  font-size: 8px;
+  line-height: 1.2;
+  padding-right: 30px; /* 👈 espaço para QR */
 }
 
 /* LOTE */
 .lote-conf {
   font-weight: 700;
-  margin-top: 2px;
+  margin-top: 3px;
 }
 
-/* QR */
+/* QR CODE */
 .qrcode {
   position: absolute;
-  right: 3.5mm;
-  bottom: 3.5mm;
-  width: 24px;
-  height: 24px;
+  right: 3mm;
+  bottom: 3mm;
+  width: 26px;
+  height: 26px;
 }
 
 /* BOTÃO */
 button {
-  margin-top: 18px;
-  padding: 12px 28px;
-  font-size: 15px;
+  margin-top: 20px;
+  padding: 14px 32px;
+  font-size: 16px;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   background: #2b2b2b;
   color: white;
   cursor: pointer;
 }
 
+/* IMPRESSÃO */
 @media print {
   body {
     background: white;
     padding: 0;
   }
+
   button {
     display: none;
   }
@@ -143,7 +146,7 @@ button {
 const url = window.location.href;
 
 document.getElementById("qr").src =
-  "https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=" +
+  "https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=" +
   encodeURIComponent(url);
 </script>
 
