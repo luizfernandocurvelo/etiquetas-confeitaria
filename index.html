@@ -23,8 +23,16 @@ body {
   border-radius: 8mm;
   background: #f5f5f5;
   box-sizing: border-box;
-  position: relative;
-  overflow: hidden;
+
+  display: grid;
+  grid-template-columns: 1fr 32px; /* 🔥 espaço FIXO pro QR */
+  column-gap: 6px;
+}
+
+/* ESQUERDA */
+.conteudo {
+  display: flex;
+  flex-direction: column;
 }
 
 /* TOPO */
@@ -36,18 +44,13 @@ body {
   margin-bottom: 3px;
 }
 
-/* CONTEÚDO */
-.conteudo {
-  font-size: 9px;
-  padding-right: 34px;
-}
-
 /* LINHAS */
 .linha {
   display: flex;
   justify-content: space-between;
+  font-size: 9px;
   margin: 1px 0;
-  white-space: nowrap; /* 🔥 NÃO QUEBRA LINHA */
+  white-space: nowrap;
 }
 
 .label {
@@ -55,24 +58,26 @@ body {
 }
 
 .valor {
-  text-align: right;
   margin-left: 6px;
 }
 
 /* RODAPÉ */
 .rodape {
-  margin-top: 3px;
+  margin-top: auto;
   font-size: 8.5px;
   line-height: 1.1;
 }
 
 /* QR */
+.qr-container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
 .qr {
-  position: absolute;
-  right: 3.5mm;
-  bottom: 3.5mm;
-  width: 26px; /* 🔥 menor = não invade */
-  height: 26px;
+  width: 28px;
+  height: 28px;
 }
 
 /* BOTÃO */
@@ -98,12 +103,13 @@ button {
 
 <div class="etiqueta">
 
-  <div class="topo">
-    <div id="produto">Leite Integral</div>
-    <div id="peso">1L</div>
-  </div>
-
+  <!-- ESQUERDA -->
   <div class="conteudo">
+
+    <div class="topo">
+      <div id="produto">Leite Integral</div>
+      <div id="peso">1L</div>
+    </div>
 
     <div class="linha"><span class="label">CONSERVAR:</span><span class="valor" id="conservacao">Resfriado</span></div>
     <div class="linha"><span class="label">VAL. ORIGINAL:</span><span class="valor" id="val_original">18/04/2026 20:00</span></div>
@@ -121,7 +127,10 @@ button {
 
   </div>
 
-  <img id="qr" class="qr">
+  <!-- DIREITA (QR) -->
+  <div class="qr-container">
+    <img id="qr" class="qr">
+  </div>
 
 </div>
 
@@ -147,9 +156,9 @@ set("lote","lote");
 set("resp","resp");
 set("lc","lc");
 
-/* QR menor e limpo */
+/* QR */
 document.getElementById("qr").src =
-  "https://api.qrserver.com/v1/create-qr-code/?size=70x70&data=" +
+  "https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=" +
   encodeURIComponent(window.location.href);
 </script>
 
