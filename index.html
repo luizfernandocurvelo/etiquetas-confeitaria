@@ -18,18 +18,18 @@ body {
 .etiqueta {
   width: 60mm;
   height: 40mm;
-  padding: 3.5mm;
+  padding: 4mm;
   border: 2px solid black;
   border-radius: 8mm;
   background: #f5f5f5;
   box-sizing: border-box;
 
   display: grid;
-  grid-template-columns: 1fr 32px; /* 🔥 espaço FIXO pro QR */
+  grid-template-columns: 1fr 28px;
   column-gap: 6px;
 }
 
-/* ESQUERDA */
+/* CONTEÚDO */
 .conteudo {
   display: flex;
   flex-direction: column;
@@ -40,16 +40,16 @@ body {
   display: flex;
   justify-content: space-between;
   font-weight: bold;
-  font-size: 13px;
-  margin-bottom: 3px;
+  font-size: 14px;
+  margin-bottom: 4px;
 }
 
 /* LINHAS */
 .linha {
   display: flex;
   justify-content: space-between;
-  font-size: 9px;
-  margin: 1px 0;
+  font-size: 9.2px;
+  margin: 2px 0;
   white-space: nowrap;
 }
 
@@ -63,9 +63,9 @@ body {
 
 /* RODAPÉ */
 .rodape {
-  margin-top: auto;
-  font-size: 8.5px;
-  line-height: 1.1;
+  margin-top: 4px;
+  font-size: 8.8px;
+  line-height: 1.25;
 }
 
 /* QR */
@@ -76,8 +76,8 @@ body {
 }
 
 .qr {
-  width: 28px;
-  height: 28px;
+  width: 24px; /* 🔥 menor e elegante */
+  height: 24px;
 }
 
 /* BOTÃO */
@@ -103,7 +103,6 @@ button {
 
 <div class="etiqueta">
 
-  <!-- ESQUERDA -->
   <div class="conteudo">
 
     <div class="topo">
@@ -122,12 +121,11 @@ button {
     <div class="rodape">
       RESP.: <span id="resp">Luiz</span><br>
       CURVELLO CONFEITARIA<br>
-      LOTE CONFEITARIA: <span id="lc">001</span>
+      <strong>LOTE CONFEITARIA: <span id="lc">001</span></strong>
     </div>
 
   </div>
 
-  <!-- DIREITA (QR) -->
   <div class="qr-container">
     <img id="qr" class="qr">
   </div>
@@ -156,9 +154,8 @@ set("lote","lote");
 set("resp","resp");
 set("lc","lc");
 
-/* QR */
 document.getElementById("qr").src =
-  "https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=" +
+  "https://api.qrserver.com/v1/create-qr-code/?size=70x70&data=" +
   encodeURIComponent(window.location.href);
 </script>
 
