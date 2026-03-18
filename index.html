@@ -147,19 +147,29 @@ function formatarData(valor) {
 }
 
 // 🔹 preencher dados
-document.getElementById("produto").textContent = params.get("produto") || "-";
-document.getElementById("volume").textContent = params.get("volume") || "1L";
+fetch("dados.json")
+  .then(response => response.json())
+  .then(data => {
+    const item = data.find(d => d.id === id);
 
-document.getElementById("val_original").textContent = formatarData(params.get("val_original"));
-document.getElementById("manipulacao").textContent = formatarData(params.get("manipulacao"));
-document.getElementById("validade").textContent = formatarData(params.get("validade"));
+    if (!item) return;
 
-document.getElementById("marca").textContent = params.get("marca") || "-";
-document.getElementById("sif").textContent = params.get("sif") || "-";
-document.getElementById("lote").textContent = params.get("lote") || "-";
-document.getElementById("resp").textContent = params.get("resp") || "-";
-document.getElementById("lote_conf").textContent = params.get("lote_conf") || "-";
+    document.getElementById("produto").textContent = item.produto || "-";
+    document.getElementById("volume").textContent = item.volume || "1L";
 
+    document.getElementById("conservacao").textContent = item.conservacao || "-";
+    document.getElementById("val_original").textContent = item.val_original || "-";
+    document.getElementById("manipulacao").textContent = item.manipulacao || "-";
+    document.getElementById("validade").textContent = item.validade || "-";
+
+    document.getElementById("marca").textContent = item.marca || "-";
+    document.getElementById("sif").textContent = item.sif || "-";
+    document.getElementById("lote").textContent = item.lote || "-";
+
+    document.getElementById("responsavel").textContent = item.responsavel || "-";
+    document.getElementById("lote_conf").textContent = item.lote_conf || "-";
+  });
+  
 // 🔹 QR Code
 const url = window.location.href + "&t=" + new Date().getTime();
 document.getElementById("qr").src =
