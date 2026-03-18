@@ -26,6 +26,7 @@ body {
   flex-direction: column;
 }
 
+/* TOPO */
 .topo {
   display: flex;
   justify-content: space-between;
@@ -33,6 +34,7 @@ body {
   font-size: 13px;
 }
 
+/* LINHAS */
 .linha {
   display: flex;
   justify-content: space-between;
@@ -44,20 +46,26 @@ body {
   font-weight: bold;
 }
 
+/* RODAPÉ */
 .rodape {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  margin-top: auto;
 }
 
 .info {
   font-size: 8.5px;
+  line-height: 1.2;
 }
 
+/* QR */
 .qrcode {
   width: 40px;
+  height: 40px;
 }
 
+/* BOTÃO */
 button {
   margin-top: 18px;
   padding: 12px 28px;
@@ -81,24 +89,26 @@ button {
 <div class="etiqueta">
 
   <div class="topo">
-    <div id="produto">Produto exemplo</div>
-    <div id="peso">1kg</div>
+    <div id="produto"></div>
+    <div id="peso"></div>
   </div>
 
   <div>
-    <div class="linha"><span class="label">CONSERVAR:</span><span id="conservacao">Resfriado</span></div>
-    <div class="linha"><span class="label">VAL. ORIGINAL:</span><span id="val_original">10/08/2026</span></div>
-    <div class="linha"><span class="label">MANIPULAÇÃO:</span><span id="manipulacao">06/03/2026 13:30</span></div>
-    <div class="linha"><span class="label">VALIDADE:</span><span id="validade">10/03/2026 13:30</span></div>
-    <div class="linha"><span class="label">MARCA:</span><span id="marca">Nestle</span></div>
-    <div class="linha"><span class="label">LOTE:</span><span id="lote">HJ6782</span></div>
+    <div class="linha"><span class="label">CONSERVAR:</span><span id="conservacao"></span></div>
+    <div class="linha"><span class="label">VAL. ORIGINAL:</span><span id="val_original"></span></div>
+    <div class="linha"><span class="label">MANIPULAÇÃO:</span><span id="manipulacao"></span></div>
+    <div class="linha"><span class="label">VALIDADE:</span><span id="validade"></span></div>
+    <div class="linha"><span class="label">MARCA / FORN.:</span><span id="marca"></span></div>
+    <div class="linha"><span class="label">SIF:</span><span id="sif"></span></div>
+    <div class="linha"><span class="label">LOTE:</span><span id="lote"></span></div>
   </div>
 
   <div class="rodape">
     <div class="info">
-      RESP.: <span id="resp">Luiz</span><br>
+      RESP.: <span id="resp"></span><br>
       CURVELLO CONFEITARIA<br>
-      LOTE CONFEITARIA: <span id="lc">001</span>
+      <strong>LOTE CONFEITARIA:</strong><br>
+      <span id="lc"></span>
     </div>
 
     <img id="qr" class="qrcode">
@@ -111,11 +121,32 @@ button {
 <script>
 const params = new URLSearchParams(window.location.search);
 
+// 👉 DADOS PADRÃO (se abrir sem Glide)
+const dadosPadrao = {
+  produto: "LEITE INTEGRAL",
+  peso: "1L",
+  conservacao: "RESFRIADO",
+  val_original: "10/08/2026",
+  manipulacao: "06/03/2026 13:30",
+  validade: "10/03/2026 13:30",
+  marca: "NESTLE",
+  sif: "2025",
+  lote: "HJ6782",
+  resp: "LUIZ",
+  lc: "31411"
+};
+
+// FUNÇÃO
 function set(id, param) {
-  const valor = params.get(param);
-  if (valor) document.getElementById(id).innerText = valor;
+  let valor = params.get(param);
+
+  // se não veio do Glide → usa padrão
+  if (!valor) valor = dadosPadrao[param];
+
+  document.getElementById(id).innerText = valor || "";
 }
 
+// CAMPOS
 set("produto", "produto");
 set("peso", "peso");
 set("conservacao", "conservacao");
@@ -123,10 +154,12 @@ set("val_original", "val_original");
 set("manipulacao", "manipulacao");
 set("validade", "validade");
 set("marca", "marca");
+set("sif", "sif");
 set("lote", "lote");
 set("resp", "resp");
 set("lc", "lc");
 
+// QR
 document.getElementById("qr").src =
   "https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" + encodeURIComponent(window.location.href);
 </script>
