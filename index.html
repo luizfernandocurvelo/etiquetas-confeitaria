@@ -29,22 +29,23 @@ body {
   flex-direction: column;
 }
 
-/* TOPO (AJUSTADO) */
+/* TOPO */
 .topo {
   display: flex;
   justify-content: space-between;
   font-weight: 700;
-  font-size: 12px; /* 🔧 ajuste fino */
+  font-size: 12px;
   margin-bottom: 2px;
 }
 
-/* GRID CONTEÚDO */
+/* CONTEÚDO */
 .conteudo {
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 2px 6px;
+  grid-template-columns: 1fr 65px; /* 👈 largura fixa profissional */
+  row-gap: 1px; /* 👈 mais compacto */
+  column-gap: 6px;
   font-size: 8.2px;
-  line-height: 1.2;
+  line-height: 1.15;
 }
 
 /* LABEL */
@@ -58,11 +59,11 @@ body {
   white-space: nowrap;
 }
 
-/* RODAPÉ (AJUSTADO) */
+/* RODAPÉ */
 .rodape {
   margin-top: auto;
-  font-size: 7.5px; /* 🔧 ajuste fino */
-  line-height: 1.2;
+  font-size: 7.5px;
+  line-height: 1.15;
 }
 
 /* LOTE */
@@ -71,11 +72,11 @@ body {
   margin-top: 2px;
 }
 
-/* QR (AJUSTADO) */
+/* QR */
 .qrcode {
   position: absolute;
-  right: 3.5mm;  /* 🔧 ajuste fino */
-  bottom: 3.5mm; /* 🔧 ajuste fino */
+  right: 3.5mm;
+  bottom: 3.5mm;
   width: 24px;
   height: 24px;
 }
