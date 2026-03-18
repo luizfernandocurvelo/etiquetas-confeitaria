@@ -8,20 +8,27 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f2f2f2;
 }
 
+/* ETIQUETA */
 .etiqueta {
   width: 60mm;
   height: 40mm;
   padding: 3mm;
   border: 2px solid black;
-  border-radius: 6px;
+  border-radius: 6mm;
+  background: white;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
+/* TOPO */
 .topo {
   display: flex;
   justify-content: space-between;
@@ -29,70 +36,90 @@ body {
   font-size: 11px;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  font-size: 8px;
-  row-gap: 1px;
+/* CORPO */
+.linha {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  margin: 1px 0;
 }
 
 .label {
   font-weight: bold;
 }
 
-.footer {
+/* RODAPÉ */
+.rodape {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  font-size: 8px;
 }
 
-.qr img {
-  width: 50px;
-  height: 50px;
+.info {
+  font-size: 9px;
+  line-height: 1.2;
 }
 
+.qrcode {
+  width: 45px;
+  height: 45px;
+}
+
+/* BOTÃO */
 button {
-  margin-top: 10px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 8px 16px;
+  margin-top: 15px;
+  padding: 10px 25px;
   font-size: 14px;
+  border: none;
+  border-radius: 8px;
+  background: #2b2b2b;
+  color: white;
+  cursor: pointer;
+}
+
+/* IMPRESSÃO */
+@media print {
+  body {
+    background: white;
+  }
+
+  button {
+    display: none;
+  }
+
+  .etiqueta {
+    border: 2px solid black;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="etiqueta">
+<div class="etiqueta" id="etiqueta">
 
   <div class="topo">
-    <div id="produto"></div>
-    <div id="peso"></div>
+    <div id="produto">LEITE INTEGRAL</div>
+    <div id="peso">1L</div>
   </div>
 
-  <div class="grid">
-    <div class="label">CONSERVAR:</div><div id="conservacao"></div>
-    <div class="label">VAL. ORIGINAL:</div><div id="val_original"></div>
-    <div class="label">MANIPULAÇÃO:</div><div id="manipulacao"></div>
-    <div class="label">VALIDADE:</div><div id="validade"></div>
+  <div class="linha"><span class="label">CONSERVAR:</span><span id="conservacao"></span></div>
+  <div class="linha"><span class="label">VAL. ORIGINAL:</span><span id="val_original"></span></div>
+  <div class="linha"><span class="label">MANIPULAÇÃO:</span><span id="manipulacao"></span></div>
+  <div class="linha"><span class="label">VALIDADE:</span><span id="validade"></span></div>
+  <div class="linha"><span class="label">MARCA / FORN.:</span><span id="marca"></span></div>
+  <div class="linha"><span class="label">SIF:</span><span id="sif"></span></div>
+  <div class="linha"><span class="label">LOTE:</span><span id="lote"></span></div>
 
-    <div class="label">MARCA / FORN.:</div><div id="marca"></div>
-    <div class="label">SIF:</div><div id="sif"></div>
-    <div class="label">LOTE:</div><div id="lote"></div>
-  </div>
-
-  <div class="footer">
-    <div>
-      <div id="resp"></div>
-      <div>CURVELLO CONFEITARIA</div>
-      <div><b>LOTE CONF.:</b> <span id="lc"></span></div>
+  <div class="rodape">
+    <div class="info">
+      RESP.: <span id="resp"></span><br>
+      CURVELLO CONFEITARIA<br><br>
+      LOTE CONFEITARIA:<br>
+      <strong id="lc"></strong>
     </div>
 
-    <div class="qr">
-      <img id="qr">
-    </div>
+    <img id="qr" class="qrcode">
   </div>
 
 </div>
@@ -100,18 +127,28 @@ button {
 <button onclick="window.print()">Imprimir etiqueta</button>
 
 <script>
+// pegar parâmetros da URL
 const params = new URLSearchParams(window.location.search);
 
-function set(id) {
-  document.getElementById(id).innerText = params.get(id) || "";
+function set(id, param) {
+  document.getElementById(id).innerText = params.get(param) || "";
 }
 
-["produto","peso","conservacao","val_original","manipulacao","validade","marca","sif","lote","resp","lc"].forEach(set);
+// preencher dados
+set("produto", "produto");
+set("conservacao", "conservacao");
+set("val_original", "val_original");
+set("manipulacao", "manipulacao");
+set("validade", "validade");
+set("marca", "marca");
+set("lote", "lote");
+set("resp", "resp");
+set("lc", "lc");
 
 // QR CODE
-const qrData = window.location.href;
+const url = window.location.href;
 document.getElementById("qr").src =
-  "https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" + encodeURIComponent(qrData);
+  "https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" + encodeURIComponent(url);
 </script>
 
 </body>
