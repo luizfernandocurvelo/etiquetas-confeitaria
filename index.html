@@ -32,26 +32,23 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 4px; /* RESPIRO */
+  font-weight: bold;
+  font-size: 13px;
+  margin-bottom: 2px;
 }
 
+/* PRODUTO MAIS FORTE */
 #produto {
   font-weight: 800;
-  font-size: 13px;
+  letter-spacing: 0.3px;
 }
 
-#peso {
-  font-weight: bold;
-  font-size: 12px;
-}
-
-/* TABELA */
-.tabela {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  row-gap: 2px;
+/* LINHAS */
+.linha {
+  display: flex;
+  justify-content: space-between;
   font-size: 9px;
-  margin-bottom: 4px;
+  margin: 2px 0;
 }
 
 .label {
@@ -63,29 +60,34 @@ body {
   min-width: 70px;
 }
 
+/* BLOCO */
+.bloco {
+  flex-grow: 1;
+}
+
 /* RODAPÉ */
 .rodape {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-top: auto;
+  margin-top: 2px;
 }
 
-/* TEXTO */
 .info {
-  font-size: 8.5px;
-  line-height: 1.3;
+  font-size: 8.8px;
+  line-height: 1.2;
 }
 
 .lote-conf {
-  margin-top: 4px; /* SEPARAÇÃO REAL */
   font-weight: bold;
+  margin-top: 2px;
 }
 
 /* QR */
 .qrcode {
-  width: 38px;
-  height: 38px;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 4px;
 }
 
 /* BOTÃO */
@@ -100,9 +102,19 @@ button {
   cursor: pointer;
 }
 
+/* IMPRESSÃO */
 @media print {
-  button { display: none; }
-  body { background: white; }
+  body {
+    background: white;
+  }
+
+  button {
+    display: none;
+  }
+
+  .etiqueta {
+    border: 2px solid black;
+  }
 }
 </style>
 </head>
@@ -112,27 +124,30 @@ button {
 <div class="etiqueta">
 
   <div class="topo">
-    <div id="produto"></div>
+    <div id="produto">PRODUTO</div>
     <div id="peso"></div>
   </div>
 
-  <div class="tabela">
-    <div class="label">CONSERVAR:</div><div class="valor" id="conservacao"></div>
-    <div class="label">VAL. ORIGINAL:</div><div class="valor" id="val_original"></div>
-    <div class="label">MANIPULAÇÃO:</div><div class="valor" id="manipulacao"></div>
-    <div class="label">VALIDADE:</div><div class="valor" id="validade"></div>
-    <div class="label">MARCA / FORN.:</div><div class="valor" id="marca"></div>
-    <div class="label">SIF:</div><div class="valor" id="sif"></div>
-    <div class="label">LOTE:</div><div class="valor" id="lote"></div>
+  <div class="bloco">
+
+    <div class="linha"><span class="label">CONSERVAR:</span><span class="valor" id="conservacao"></span></div>
+    <div class="linha"><span class="label">VAL. ORIGINAL:</span><span class="valor" id="val_original"></span></div>
+    <div class="linha"><span class="label">MANIPULAÇÃO:</span><span class="valor" id="manipulacao"></span></div>
+    <div class="linha"><span class="label">VALIDADE:</span><span class="valor" id="validade"></span></div>
+    <div class="linha"><span class="label">MARCA / FORN.:</span><span class="valor" id="marca"></span></div>
+    <div class="linha"><span class="label">SIF:</span><span class="valor" id="sif"></span></div>
+    <div class="linha"><span class="label">LOTE:</span><span class="valor" id="lote"></span></div>
+
   </div>
 
   <div class="rodape">
     <div class="info">
       RESP.: <span id="resp"></span><br>
-      CURVELLO CONFEITARIA
+      CURVELLO CONFEITARIA<br>
 
       <div class="lote-conf">
-        LOTE CONFEITARIA: <span id="lc"></span>
+        LOTE CONFEITARIA:<br>
+        <span id="lc"></span>
       </div>
     </div>
 
@@ -146,45 +161,24 @@ button {
 <script>
 const params = new URLSearchParams(window.location.search);
 
-// DADOS PADRÃO (TESTE)
-const d = {
-  produto: "Leite Integral",
-  peso: "1kg",
-  conservacao: "Resfriado",
-  val_original: "18/04/2026 20:00",
-  manipulacao: "18/03/2026 00:29",
-  validade: "21/03/2026 00:29",
-  marca: "Nestle",
-  sif: "2025",
-  lote: "HJ6782",
-  resp: "Luiz",
-  lc: "001"
-};
-
 function set(id, param) {
-  document.getElementById(id).innerText =
-    params.get(param) || d[param] || "";
+  const valor = params.get(param);
+  if (valor) document.getElementById(id).innerText = valor;
 }
 
-// CAMPOS
-set("produto","produto");
-set("peso","peso");
-set("conservacao","conservacao");
-set("val_original","val_original");
-set("manipulacao","manipulacao");
-set("validade","validade");
-set("marca","marca");
-set("sif","sif");
-set("lote","lote");
-set("resp","resp");
-set("lc","lc");
+set("produto", "produto");
+set("conservacao", "conservacao");
+set("val_original", "val_original");
+set("manipulacao", "manipulacao");
+set("validade", "validade");
+set("marca", "marca");
+set("lote", "lote");
+set("resp", "resp");
+set("lc", "lc");
 
-// QR MAIS LIMPO (SÓ O LOTE DA CONFEITARIA)
-const qrData = "Lote: " + (params.get("lc") || d.lc);
+const url = window.location.href;
 document.getElementById("qr").src =
-  "https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" +
-  encodeURIComponent(qrData);
-
+  "https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" + encodeURIComponent(url);
 </script>
 
 </body>
