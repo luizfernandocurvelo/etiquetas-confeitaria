@@ -25,21 +25,16 @@ body {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  position: relative; /* 👈 ESSENCIAL */
 }
 
 /* TOPO */
 .topo {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   font-weight: bold;
   font-size: 13px;
   margin-bottom: 2px;
-}
-
-#produto {
-  font-weight: 800;
-  letter-spacing: 0.3px;
 }
 
 /* LINHAS */
@@ -47,17 +42,11 @@ body {
   display: flex;
   justify-content: space-between;
   font-size: 9px;
-  margin: 2px 0;
+  margin: 1px 0;
 }
 
-.label {
-  font-weight: bold;
-}
-
-.valor {
-  text-align: right;
-  min-width: 60px;
-}
+.label { font-weight: bold; }
+.valor { text-align: right; }
 
 /* BLOCO */
 .bloco {
@@ -66,25 +55,23 @@ body {
 
 /* RODAPÉ */
 .rodape {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-
-.info {
   font-size: 8.5px;
   line-height: 1.2;
 }
 
+/* LOTE CONF */
 .lote-conf {
   font-weight: bold;
   margin-top: 2px;
 }
 
-/* ✅ QR AJUSTADO (ESSENCIAL) */
+/* ✅ QR FIXO NO CANTO */
 .qrcode {
-  width: 26px;
-  height: 26px;
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: 28px;
+  height: 28px;
 }
 
 /* BOTÃO */
@@ -111,35 +98,30 @@ button {
 <div class="etiqueta">
 
   <div class="topo">
-    <div id="produto">PRODUTO</div>
-    <div id="peso">1L</div>
+    <div>Leite Integral</div>
+    <div>1L</div>
   </div>
 
   <div class="bloco">
-
     <div class="linha"><span class="label">CONSERVAR:</span><span class="valor">Resfriado</span></div>
-    <div class="linha"><span class="label">VAL. ORIGINAL:</span><span class="valor">18/04/2026 20:00</span></div>
-    <div class="linha"><span class="label">MANIPULAÇÃO:</span><span class="valor">18/03/2026 00:29</span></div>
-    <div class="linha"><span class="label">VALIDADE:</span><span class="valor">21/03/2026 00:29</span></div>
+    <div class="linha"><span class="label">VAL. ORIGINAL:</span><span class="valor">10/08/2026</span></div>
+    <div class="linha"><span class="label">MANIPULAÇÃO:</span><span class="valor">06/03/2026 13:30</span></div>
+    <div class="linha"><span class="label">VALIDADE:</span><span class="valor">10/03/2026 13:30</span></div>
     <div class="linha"><span class="label">MARCA / FORN.:</span><span class="valor">Nestle</span></div>
     <div class="linha"><span class="label">SIF:</span><span class="valor">2025</span></div>
     <div class="linha"><span class="label">LOTE:</span><span class="valor">HJ6782</span></div>
-
   </div>
 
   <div class="rodape">
-    <div class="info">
-      RESP.: Luiz<br>
-      CURVELLO CONFEITARIA<br>
+    RESP.: Luiz<br>
+    CURVELLO CONFEITARIA<br>
 
-      <div class="lote-conf">
-        LOTE CONFEITARIA:<br>
-        001
-      </div>
+    <div class="lote-conf">
+      LOTE CONFEITARIA: 31411
     </div>
-
-    <img id="qr" class="qrcode">
   </div>
+
+  <img id="qr" class="qrcode">
 
 </div>
 
