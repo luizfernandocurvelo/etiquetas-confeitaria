@@ -9,76 +9,75 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
+  align-items: flex-start;
   background: #f2f2f2;
+  padding-top: 20px;
 }
 
 /* ETIQUETA */
 .etiqueta {
   width: 60mm;
   height: 40mm;
-  padding: 3mm;
-  border: 2px solid black;
+  padding: 2.5mm;
+  border: 2px solid #000;
   border-radius: 6mm;
-  background: white;
+  background: #fff;
   box-sizing: border-box;
+  position: relative;
   display: flex;
   flex-direction: column;
-  position: relative;
 }
 
 /* TOPO */
 .topo {
   display: flex;
   justify-content: space-between;
-  font-weight: bold;
-  font-size: 13px;
-  margin-bottom: 3px;
+  font-weight: 700;
+  font-size: 12.5px;
+  margin-bottom: 2px;
 }
 
-/* LINHAS */
-.linha {
-  display: flex;
-  justify-content: space-between;
-  font-size: 9px;
-  margin: 1px 0;
+/* GRID PRINCIPAL */
+.conteudo {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px 6px;
+  font-size: 8.2px;
+  line-height: 1.2;
 }
 
+/* LABEL */
 .label {
-  font-weight: bold;
+  font-weight: 700;
 }
 
+/* VALOR */
 .valor {
   text-align: right;
-  min-width: 70px;
-}
-
-/* BLOCO */
-.bloco {
-  flex-grow: 1;
+  white-space: nowrap;
 }
 
 /* RODAPÉ */
 .rodape {
-  font-size: 8.5px;
-  line-height: 1.25;
-  padding-right: 34px; /* 👈 espaço pro QR */
+  margin-top: auto;
+  font-size: 7.8px;
+  line-height: 1.2;
 }
 
 /* LOTE CONF */
 .lote-conf {
-  font-weight: bold;
-  margin-top: 3px;
+  font-weight: 700;
+  margin-top: 2px;
 }
 
-/* QR FIXO */
+/* QR CODE FIXO */
 .qrcode {
   position: absolute;
-  bottom: 4px;
-  right: 4px;
-  width: 26px;
-  height: 26px;
+  right: 3mm;
+  bottom: 3mm;
+  width: 24px;
+  height: 24px;
 }
 
 /* BOTÃO */
@@ -94,7 +93,7 @@ button {
 }
 
 @media print {
-  body { background: white; }
+  body { background: white; padding: 0; }
   button { display: none; }
 }
 </style>
@@ -109,19 +108,19 @@ button {
     <div>1L</div>
   </div>
 
-  <div class="bloco">
-    <div class="linha"><span class="label">CONSERVAR:</span><span class="valor">Resfriado</span></div>
-    <div class="linha"><span class="label">VAL. ORIGINAL:</span><span class="valor">10/08/2026</span></div>
-    <div class="linha"><span class="label">MANIPULAÇÃO:</span><span class="valor">06/03/2026 13:30</span></div>
-    <div class="linha"><span class="label">VALIDADE:</span><span class="valor">10/03/2026 13:30</span></div>
-    <div class="linha"><span class="label">MARCA / FORN.:</span><span class="valor">Nestle</span></div>
-    <div class="linha"><span class="label">SIF:</span><span class="valor">2025</span></div>
-    <div class="linha"><span class="label">LOTE:</span><span class="valor">HJ6782</span></div>
+  <div class="conteudo">
+    <div class="label">CONSERVAR:</div><div class="valor">Resfriado</div>
+    <div class="label">VAL. ORIGINAL:</div><div class="valor">10/08/2026</div>
+    <div class="label">MANIPULAÇÃO:</div><div class="valor">06/03/2026 13:30</div>
+    <div class="label">VALIDADE:</div><div class="valor">10/03/2026 13:30</div>
+    <div class="label">MARCA / FORN.:</div><div class="valor">Nestle</div>
+    <div class="label">SIF:</div><div class="valor">2025</div>
+    <div class="label">LOTE:</div><div class="valor">HJ6782</div>
   </div>
 
   <div class="rodape">
     RESP.: Luiz<br>
-    CURVELLO CONFEITARIA<br>
+    CURVELLO CONFEITARIA
 
     <div class="lote-conf">
       LOTE CONFEITARIA: 31411
