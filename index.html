@@ -23,18 +23,166 @@ body {
   border-radius: 6mm;
   background: white;
   box-sizing: border-box;
-
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-
-  overflow: hidden; /* 🔥 ESSENCIAL */
 }
 
 /* TOPO */
 .topo {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  font-size: 13px;
+  margin-bottom: 2px;
+}
+
+/* PRODUTO MAIS FORTE */
+#produto {
+  font-weight: 800;
+  letter-spacing: 0.3px;
+}
+
+/* LINHAS */
+.linha {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  margin: 2px 0;
+}
+
+.label {
+  font-weight: bold;
+}
+
+.valor {
+  text-align: right;
+  min-width: 70px;
+}
+
+/* BLOCO */
+.bloco {
+  flex-grow: 1;
+}
+
+/* RODAPÉ */
+.rodape {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 2px;
+}
+
+.info {
+  font-size: 8.8px;
+  line-height: 1.2;
+}
+
+.lote-conf {
+  font-weight: bold;
+  margin-top: 2px;
+}
+
+/* QR */
+.qrcode {
+  width: 46px;
+  height: 46px;
+  margin-bottom: 4px;
+}
+
+/* BOTÃO */
+button {
+  margin-top: 18px;
+  padding: 12px 28px;
+  font-size: 15px;
+  border: none;
+  border-radius: 10px;
+  background: #2b2b2b;
+  color: white;
+  cursor: pointer;
+}
+
+/* IMPRESSÃO */
+@media print {
+  body {
+    background: white;
+  }
+
+  button {
+    display: none;
+  }
+
+  .etiqueta {
+    border: 2px solid black;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="etiqueta">
+
+  <div class="topo">
+    <div id="produto">PRODUTO</div>
+    <div id="peso"></div>
+  </div>
+
+  <div class="bloco">
+
+    <div class="linha"><span class="label">CONSERVAR:</span><span class="valor" id="conservacao"></span></div>
+    <div class="linha"><span class="label">VAL. ORIGINAL:</span><span class="valor" id="val_original"></span></div>
+    <div class="linha"><span class="label">MANIPULAÇÃO:</span><span class="valor" id="manipulacao"></span></div>
+    <div class="linha"><span class="label">VALIDADE:</span><span class="valor" id="validade"></span></div>
+    <div class="linha"><span class="label">MARCA / FORN.:</span><span class="valor" id="marca"></span></div>
+    <div class="linha"><span class="label">SIF:</span><span class="valor" id="sif"></span></div>
+    <div class="linha"><span class="label">LOTE:</span><span class="valor" id="lote"></span></div>
+
+  </div>
+
+  <div class="rodape">
+    <div class="info">
+      RESP.: <span id="resp"></span><br>
+      CURVELLO CONFEITARIA<br>
+
+      <div class="lote-conf">
+        LOTE CONFEITARIA:<br>
+        <span id="lc"></span>
+      </div>
+    </div>
+
+    <img id="qr" class="qrcode">
+  </div>
+
+</div>
+
+<button onclick="window.print()">Imprimir etiqueta</button>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+
+function set(id, param) {
+  const valor = params.get(param);
+  if (valor) document.getElementById(id).innerText = valor;
+}
+
+set("produto", "produto");
+set("conservacao", "conservacao");
+set("val_original", "val_original");
+set("manipulacao", "manipulacao");
+set("validade", "validade");
+set("marca", "marca");
+set("lote", "lote");
+set("resp", "resp");
+set("lc", "lc");
+
+const url = window.location.href;
+document.getElementById("qr").src =
+  "https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" + encodeURIComponent(url);
+</script>
+
+</body>
+</html>  justify-content: space-between;
   font-weight: bold;
   font-size: 11px;
 }
