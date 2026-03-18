@@ -25,7 +25,6 @@ body {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
 /* TOPO */
@@ -49,10 +48,13 @@ body {
   font-weight: bold;
 }
 
-/* ESPAÇO EXTRA ENTRE BLOCOS */
-.linha:nth-child(4),
-.linha:nth-child(5) {
-  margin-bottom: 4px;
+.valor {
+  text-align: right;
+}
+
+/* BLOCO SUPERIOR */
+.bloco {
+  flex-grow: 1;
 }
 
 /* RODAPÉ */
@@ -60,7 +62,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-top: 4px;
+  margin-top: 3px;
 }
 
 .info {
@@ -68,9 +70,16 @@ body {
   line-height: 1.3;
 }
 
+.lote-conf {
+  font-weight: bold;
+  margin-top: 3px;
+}
+
+/* QR */
 .qrcode {
-  width: 50px;
-  height: 50px;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 2px;
 }
 
 /* BOTÃO */
@@ -111,20 +120,27 @@ button {
     <div id="peso"></div>
   </div>
 
-  <div class="linha"><span class="label">CONSERVAR:</span><span id="conservacao"></span></div>
-  <div class="linha"><span class="label">VAL. ORIGINAL:</span><span id="val_original"></span></div>
-  <div class="linha"><span class="label">MANIPULAÇÃO:</span><span id="manipulacao"></span></div>
-  <div class="linha"><span class="label">VALIDADE:</span><span id="validade"></span></div>
-  <div class="linha"><span class="label">MARCA / FORN.:</span><span id="marca"></span></div>
-  <div class="linha"><span class="label">SIF:</span><span id="sif"></span></div>
-  <div class="linha"><span class="label">LOTE:</span><span id="lote"></span></div>
+  <div class="bloco">
+
+    <div class="linha"><span class="label">CONSERVAR:</span><span class="valor" id="conservacao"></span></div>
+    <div class="linha"><span class="label">VAL. ORIGINAL:</span><span class="valor" id="val_original"></span></div>
+    <div class="linha"><span class="label">MANIPULAÇÃO:</span><span class="valor" id="manipulacao"></span></div>
+    <div class="linha"><span class="label">VALIDADE:</span><span class="valor" id="validade"></span></div>
+    <div class="linha"><span class="label">MARCA / FORN.:</span><span class="valor" id="marca"></span></div>
+    <div class="linha"><span class="label">SIF:</span><span class="valor" id="sif"></span></div>
+    <div class="linha"><span class="label">LOTE:</span><span class="valor" id="lote"></span></div>
+
+  </div>
 
   <div class="rodape">
     <div class="info">
       RESP.: <span id="resp"></span><br>
-      CURVELLO CONFEITARIA<br><br>
-      LOTE CONFEITARIA:<br>
-      <strong id="lc"></strong>
+      CURVELLO CONFEITARIA<br>
+
+      <div class="lote-conf">
+        LOTE CONFEITARIA:<br>
+        <span id="lc"></span>
+      </div>
     </div>
 
     <img id="qr" class="qrcode">
@@ -135,7 +151,7 @@ button {
 <button onclick="window.print()">Imprimir etiqueta</button>
 
 <script>
-// pegar parâmetros da URL
+// pegar parâmetros
 const params = new URLSearchParams(window.location.search);
 
 function set(id, param) {
@@ -143,7 +159,7 @@ function set(id, param) {
   if (valor) document.getElementById(id).innerText = valor;
 }
 
-// CAMPOS
+// campos
 set("produto", "produto");
 set("conservacao", "conservacao");
 set("val_original", "val_original");
@@ -154,7 +170,7 @@ set("lote", "lote");
 set("resp", "resp");
 set("lc", "lc");
 
-// QR CODE
+// QR code
 const url = window.location.href;
 document.getElementById("qr").src =
   "https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" + encodeURIComponent(url);
