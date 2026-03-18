@@ -23,44 +23,28 @@ body {
   border-radius: 6mm;
   background: white;
   box-sizing: border-box;
+
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+
+  overflow: hidden; /* 🔥 ESSENCIAL */
 }
 
 /* TOPO */
 .topo {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   font-weight: bold;
-  font-size: 13px;
-  margin-bottom: 2px;
-}
-
-#produto {
-  font-weight: 800;
+  font-size: 11px;
 }
 
 /* LINHAS */
 .linha {
   display: flex;
   justify-content: space-between;
-  font-size: 9px;
-  margin: 2px 0;
-}
-
-.label {
-  font-weight: bold;
-}
-
-.valor {
-  text-align: right;
-  min-width: 70px;
-}
-
-/* BLOCO */
-.bloco {
-  flex-grow: 1;
+  font-size: 8.5px;
+  line-height: 1.2;
 }
 
 /* RODAPÉ */
@@ -68,33 +52,27 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-top: 2px;
 }
 
+/* TEXTO */
 .info {
-  font-size: 8.8px;
+  font-size: 8px;
   line-height: 1.2;
-}
-
-.lote-conf {
-  font-weight: bold;
-  margin-top: 2px;
 }
 
 /* QR */
 .qrcode {
-  width: 46px;
-  height: 46px;
-  margin-bottom: 4px;
+  width: 42px;
+  height: 42px;
 }
 
 /* BOTÃO */
 button {
-  margin-top: 18px;
-  padding: 12px 28px;
-  font-size: 15px;
+  margin-top: 15px;
+  padding: 10px 25px;
+  font-size: 14px;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   background: #2b2b2b;
   color: white;
   cursor: pointer;
@@ -109,10 +87,6 @@ button {
   button {
     display: none;
   }
-
-  .etiqueta {
-    border: 2px solid black;
-  }
 }
 </style>
 </head>
@@ -126,25 +100,19 @@ button {
     <div id="peso"></div>
   </div>
 
-  <div class="bloco">
-    <div class="linha"><span class="label">CONSERVAR:</span><span class="valor" id="conservacao"></span></div>
-    <div class="linha"><span class="label">VAL. ORIGINAL:</span><span class="valor" id="val_original"></span></div>
-    <div class="linha"><span class="label">MANIPULAÇÃO:</span><span class="valor" id="manipulacao"></span></div>
-    <div class="linha"><span class="label">VALIDADE:</span><span class="valor" id="validade"></span></div>
-    <div class="linha"><span class="label">MARCA / FORN.:</span><span class="valor" id="marca"></span></div>
-    <div class="linha"><span class="label">SIF:</span><span class="valor" id="sif"></span></div>
-    <div class="linha"><span class="label">LOTE:</span><span class="valor" id="lote"></span></div>
-  </div>
+  <div class="linha"><span>CONSERVAR:</span><span id="conservacao"></span></div>
+  <div class="linha"><span>VAL. ORIGINAL:</span><span id="val_original"></span></div>
+  <div class="linha"><span>MANIPULAÇÃO:</span><span id="manipulacao"></span></div>
+  <div class="linha"><span>VALIDADE:</span><span id="validade"></span></div>
+  <div class="linha"><span>MARCA:</span><span id="marca"></span></div>
+  <div class="linha"><span>SIF:</span><span id="sif"></span></div>
+  <div class="linha"><span>LOTE:</span><span id="lote"></span></div>
 
   <div class="rodape">
     <div class="info">
       RESP.: <span id="resp"></span><br>
       CURVELLO CONFEITARIA<br>
-
-      <div class="lote-conf">
-        LOTE CONFEITARIA:<br>
-        <span id="lc"></span>
-      </div>
+      LOTE CONF.: <span id="lc"></span>
     </div>
 
     <img id="qr" class="qrcode">
@@ -155,48 +123,24 @@ button {
 <button onclick="window.print()">Imprimir etiqueta</button>
 
 <script>
-// parâmetros da URL
 const params = new URLSearchParams(window.location.search);
 
-// formatar data
-function formatarData(valor) {
-  if (!valor) return "";
-  
-  const data = new Date(valor);
-  if (isNaN(data)) return valor;
-
-  const dia = String(data.getDate()).padStart(2, '0');
-  const mes = String(data.getMonth() + 1).padStart(2, '0');
-  const ano = data.getFullYear();
-  const hora = String(data.getHours()).padStart(2, '0');
-  const min = String(data.getMinutes()).padStart(2, '0');
-
-  return `${dia}/${mes}/${ano} ${hora}:${min}`;
+function set(id, param) {
+  const valor = params.get(param);
+  if (valor) document.getElementById(id).innerText = valor;
 }
 
-// preencher campos
-function set(id, param, isData = false) {
-  let valor = params.get(param);
-  if (!valor) return;
-
-  if (isData) valor = formatarData(valor);
-
-  document.getElementById(id).innerText = valor;
-}
-
-// CAMPOS
 set("produto", "produto");
 set("peso", "peso");
 set("conservacao", "conservacao");
-set("val_original", "val_original", true);
-set("manipulacao", "manipulacao", true);
-set("validade", "validade", true);
+set("val_original", "val_original");
+set("manipulacao", "manipulacao");
+set("validade", "validade");
 set("marca", "marca");
 set("lote", "lote");
 set("resp", "resp");
 set("lc", "lc");
 
-// QR CODE
 const url = window.location.href;
 document.getElementById("qr").src =
   "https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" + encodeURIComponent(url);
