@@ -158,10 +158,9 @@ fetch("dados.json")
     document.getElementById("volume").textContent = item.volume || "1L";
 
     document.getElementById("conservacao").textContent = item.conservacao || "-";
-    document.getElementById("val_original").textContent = item.val_original || "-";
-    document.getElementById("manipulacao").textContent = item.manipulacao || "-";
-    document.getElementById("validade").textContent = item.validade || "-";
-
+    document.getElementById("val_original").textContent = formatarData(item.val_original);
+    document.getElementById("manipulacao").textContent = formatarData(item.manipulacao);
+    document.getElementById("validade").textContent = formatarData(item.validade);
     document.getElementById("marca").textContent = item.marca || "-";
     document.getElementById("sif").textContent = item.sif || "-";
     document.getElementById("lote").textContent = item.lote || "-";
