@@ -37,10 +37,8 @@ body {
   margin-bottom: 2px;
 }
 
-/* PRODUTO MAIS FORTE */
 #produto {
   font-weight: 800;
-  letter-spacing: 0.3px;
 }
 
 /* LINHAS */
@@ -129,7 +127,6 @@ button {
   </div>
 
   <div class="bloco">
-
     <div class="linha"><span class="label">CONSERVAR:</span><span class="valor" id="conservacao"></span></div>
     <div class="linha"><span class="label">VAL. ORIGINAL:</span><span class="valor" id="val_original"></span></div>
     <div class="linha"><span class="label">MANIPULAÇÃO:</span><span class="valor" id="manipulacao"></span></div>
@@ -137,7 +134,6 @@ button {
     <div class="linha"><span class="label">MARCA / FORN.:</span><span class="valor" id="marca"></span></div>
     <div class="linha"><span class="label">SIF:</span><span class="valor" id="sif"></span></div>
     <div class="linha"><span class="label">LOTE:</span><span class="valor" id="lote"></span></div>
-
   </div>
 
   <div class="rodape">
@@ -159,23 +155,48 @@ button {
 <button onclick="window.print()">Imprimir etiqueta</button>
 
 <script>
+// parâmetros da URL
 const params = new URLSearchParams(window.location.search);
 
-function set(id, param) {
-  const valor = params.get(param);
-  if (valor) document.getElementById(id).innerText = valor;
+// formatar data
+function formatarData(valor) {
+  if (!valor) return "";
+  
+  const data = new Date(valor);
+  if (isNaN(data)) return valor;
+
+  const dia = String(data.getDate()).padStart(2, '0');
+  const mes = String(data.getMonth() + 1).padStart(2, '0');
+  const ano = data.getFullYear();
+  const hora = String(data.getHours()).padStart(2, '0');
+  const min = String(data.getMinutes()).padStart(2, '0');
+
+  return `${dia}/${mes}/${ano} ${hora}:${min}`;
 }
 
+// preencher campos
+function set(id, param, isData = false) {
+  let valor = params.get(param);
+  if (!valor) return;
+
+  if (isData) valor = formatarData(valor);
+
+  document.getElementById(id).innerText = valor;
+}
+
+// CAMPOS
 set("produto", "produto");
+set("peso", "peso");
 set("conservacao", "conservacao");
-set("val_original", "val_original");
-set("manipulacao", "manipulacao");
-set("validade", "validade");
+set("val_original", "val_original", true);
+set("manipulacao", "manipulacao", true);
+set("validade", "validade", true);
 set("marca", "marca");
 set("lote", "lote");
 set("resp", "resp");
 set("lc", "lc");
 
+// QR CODE
 const url = window.location.href;
 document.getElementById("qr").src =
   "https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" + encodeURIComponent(url);
