@@ -35,45 +35,44 @@ body {
   justify-content: space-between;
   font-weight: 700;
   font-size: 13px;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
 }
 
 /* CONTEÚDO */
 .conteudo {
   display: grid;
-  grid-template-columns: 1fr 58px;
-  row-gap: 2px;
-  column-gap: 8px;
-  font-size: 8px; /* 👈 BASE MENOR */
-  line-height: 1.2;
+  grid-template-columns: 1fr 52px; /* 👈 coluna menor */
+  row-gap: 1px; /* 👈 mais compacto */
+  column-gap: 6px;
+  font-size: 7.6px; /* 👈 reduzido */
+  line-height: 1.1;
 }
 
-/* LABEL (DIMINUÍDA) */
+/* LABEL */
 .label {
   font-weight: 600;
-  font-size: 7.4px; /* 👈 AQUI ESTÁ O AJUSTE */
-  letter-spacing: 0.2px;
+  font-size: 7px;
 }
 
 /* VALOR */
 .valor {
   text-align: right;
   white-space: nowrap;
-  font-size: 8.2px;
+  font-size: 7.4px; /* 👈 reduzido */
 }
 
 /* RODAPÉ */
 .rodape {
   margin-top: auto;
-  font-size: 7.6px;
-  line-height: 1.2;
-  padding-right: 42px;
+  font-size: 7.2px;
+  line-height: 1.1;
+  padding-right: 48px; /* 👈 espaço real pro QR */
 }
 
 /* LOTE */
 .lote-conf {
   font-weight: 700;
-  margin-top: 4px;
+  margin-top: 3px;
 }
 
 /* QR */
@@ -81,8 +80,8 @@ body {
   position: absolute;
   right: 3mm;
   bottom: 3mm;
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
 }
 
 /* BOTÃO */
@@ -148,7 +147,7 @@ button {
 const url = window.location.href;
 
 document.getElementById("qr").src =
-  "https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=" +
+  "https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" +
   encodeURIComponent(url);
 </script>
 
