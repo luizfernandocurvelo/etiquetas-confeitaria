@@ -16,14 +16,16 @@ body {
     margin-top: 40px;
 }
 
-/* ETIQUETA */
+/* ETIQUETA FIXA (PADRÃO PROFISSIONAL) */
 .etiqueta {
-    width: 420px;
+    width: 380px;
+    height: 220px;
     background: #fff;
-    border: 4px solid #000;
-    border-radius: 25px;
-    padding: 20px 22px;
+    border: 3px solid #000;
+    border-radius: 20px;
+    padding: 14px 16px;
     position: relative;
+    box-sizing: border-box;
 }
 
 /* TOPO */
@@ -31,65 +33,66 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 10px;
 }
 
 .produto {
-    font-size: 26px;
+    font-size: 20px;
     font-weight: bold;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .volume {
-    font-size: 22px;
+    font-size: 18px;
     font-weight: bold;
 }
 
 /* CONTEUDO */
 .conteudo {
     display: flex;
-    justify-content: space-between;
 }
 
 /* COLUNA ESQUERDA */
 .col-esq {
-    font-size: 14px;
-    line-height: 1.6;
+    font-size: 13px;
+    line-height: 1.4;
 }
 
 .col-esq strong {
-    font-size: 15px;
+    font-size: 13px;
 }
 
 /* COLUNA DIREITA */
 .col-dir {
     text-align: left;
-    font-size: 14px;
-    line-height: 1.6;
-    margin-left: 20px;
+    font-size: 13px;
+    line-height: 1.4;
+    margin-left: 15px;
+    width: 130px;
 }
 
 /* RODAPÉ */
 .rodape {
-    margin-top: 10px;
-    font-size: 14px;
+    position: absolute;
+    bottom: 14px;
+    left: 16px;
+    font-size: 12px;
 }
 
 .lote-conf {
-    margin-top: 6px;
+    margin-top: 4px;
     font-weight: bold;
 }
 
 /* QR CODE */
 .qr {
     position: absolute;
-    bottom: 20px;
-    right: 20px;
+    bottom: 14px;
+    right: 14px;
 }
 
 .qr img {
-    width: 90px;
-    height: 90px;
+    width: 70px;
+    height: 70px;
 }
 
 /* BOTÃO */
@@ -113,10 +116,6 @@ button {
     button {
         display: none;
     }
-
-    .etiqueta {
-        border: 4px solid black;
-    }
 }
 </style>
 </head>
@@ -127,13 +126,11 @@ button {
 
     <!-- TOPO -->
     <div class="topo">
-        <div>
-            <div id="produto" class="produto">Produto</div>
-        </div>
+        <div id="produto" class="produto">Produto</div>
         <div id="volume" class="volume">1L</div>
     </div>
 
-    <!-- CONTEÚDO -->
+    <!-- CONTEUDO -->
     <div class="conteudo">
 
         <!-- ESQUERDA -->
@@ -164,10 +161,10 @@ button {
     <div class="rodape">
         <div id="resp">RESP.: Luiz</div>
         <div>CURVELLO CONFEITARIA</div>
-        <div class="lote-conf" id="lc">LOTE CONFEITARIA: 000</div>
+        <div id="lc" class="lote-conf">LOTE CONFEITARIA: 000</div>
     </div>
 
-    <!-- QR CODE -->
+    <!-- QR -->
     <div class="qr">
         <img id="qrcode" src="">
     </div>
@@ -176,10 +173,9 @@ button {
 
 <button onclick="window.print()">Imprimir etiqueta</button>
 
-<!-- SCRIPT -->
 <script>
 
-// PEGAR PARAMETROS DA URL
+// PEGAR PARAMETROS DO GLIDE
 const params = new URLSearchParams(window.location.search);
 
 function set(id, param) {
@@ -200,11 +196,11 @@ set("lote", "lote");
 set("resp", "resp");
 set("lc", "lc");
 
-// GERAR QR CODE COM LOTE
+// QR CODE
 const lote = params.get("lote") || "000";
 
 document.getElementById("qrcode").src =
-    "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + encodeURIComponent(lote);
+    "https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=" + encodeURIComponent(lote);
 
 </script>
 
