@@ -25,22 +25,24 @@ body {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* evita quebrar layout */
 }
 
 /* TOPO */
 .topo {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   font-weight: bold;
   font-size: 13px;
-  margin-bottom: 2px;
 }
 
 #produto {
   font-weight: 800;
-  letter-spacing: 0.3px;
+}
+
+/* BLOCO */
+.bloco {
+  flex: 1;
+  margin-top: 2px;
 }
 
 /* LINHAS */
@@ -48,7 +50,7 @@ body {
   display: flex;
   justify-content: space-between;
   font-size: 9px;
-  margin: 2px 0;
+  margin: 1px 0;
 }
 
 .label {
@@ -57,37 +59,26 @@ body {
 
 .valor {
   text-align: right;
-  min-width: 70px;
 }
 
-/* BLOCO */
-.bloco {
-  flex-grow: 1;
-}
-
-/* RODAPÉ */
+/* RODAPÉ FIXO */
 .rodape {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-top: 2px;
 }
 
+/* TEXTO */
 .info {
-  font-size: 8.8px;
+  font-size: 8.5px;
   line-height: 1.2;
+  max-width: 65%;
 }
 
-.lote-conf {
-  font-weight: bold;
-  margin-top: 2px;
-}
-
-/* QR */
+/* QR CONTROLADO */
 .qrcode {
-  width: 46px;
-  height: 46px;
-  margin-bottom: 4px;
+  width: 38px;
+  height: 38px;
 }
 
 /* BOTÃO */
@@ -140,11 +131,8 @@ button {
     <div class="info">
       RESP.: <span id="resp">—</span><br>
       CURVELLO CONFEITARIA<br>
-
-      <div class="lote-conf">
-        LOTE CONFEITARIA:<br>
-        <span id="lc">—</span>
-      </div>
+      <strong>LOTE CONFEITARIA:</strong><br>
+      <span id="lc">—</span>
     </div>
 
     <img id="qr" class="qrcode">
@@ -173,10 +161,9 @@ function formatarData(valor) {
   return `${dia}/${mes}/${ano} ${hora}:${min}`;
 }
 
-// SET PADRÃO
+// SET
 function set(id, param, isData = false) {
   let valor = params.get(param);
-
   if (!valor) return;
 
   if (isData) valor = formatarData(valor);
@@ -192,6 +179,7 @@ set("val_original", "val_original", true);
 set("manipulacao", "manipulacao", true);
 set("validade", "validade", true);
 set("marca", "marca");
+set("sif", "sif");
 set("lote", "lote");
 set("resp", "resp");
 set("lc", "lc");
