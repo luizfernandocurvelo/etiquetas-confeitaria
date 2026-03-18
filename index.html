@@ -159,7 +159,7 @@ document.getElementById("resp").textContent = params.get("resp") || "-";
 document.getElementById("lote_conf").textContent = params.get("lote_conf") || "-";
 
 // 🔹 QR Code
-const url = window.location.href;
+const url = window.location.href + "&t=" + new Date().getTime();
 document.getElementById("qr").src =
   "https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" +
   encodeURIComponent(url);
