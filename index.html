@@ -137,6 +137,7 @@ button {
 <script>
 // 🔹 pegar parâmetros da URL
 const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
 
 // 🔹 função para remover vírgula das datas
 function formatarData(valor) {
