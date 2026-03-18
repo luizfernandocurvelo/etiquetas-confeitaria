@@ -28,9 +28,11 @@ body {
   flex-direction: column;
 }
 
+/* 👇 TOPO AGORA ALINHADO COM A COLUNA */
 .topo {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 52px;
+  align-items: center;
   font-weight: 700;
   font-size: 13px;
   margin-bottom: 5px;
@@ -50,7 +52,6 @@ body {
   font-size: 7px;
 }
 
-/* 👇 AQUI ESTÁ A MUDANÇA */
 .valor {
   text-align: left;
   white-space: nowrap;
