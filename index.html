@@ -37,7 +37,6 @@ body {
   margin-bottom: 2px;
 }
 
-/* PRODUTO MAIS FORTE */
 #produto {
   font-weight: 800;
   letter-spacing: 0.3px;
@@ -57,7 +56,7 @@ body {
 
 .valor {
   text-align: right;
-  min-width: 70px;
+  min-width: 65px;
 }
 
 /* BLOCO */
@@ -85,9 +84,9 @@ body {
 
 /* QR */
 .qrcode {
-  width: 46px;
-  height: 46px;
-  margin-bottom: 4px;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 2px;
 }
 
 /* BOTÃO */
@@ -111,10 +110,6 @@ button {
   button {
     display: none;
   }
-
-  .etiqueta {
-    border: 2px solid black;
-  }
 }
 </style>
 </head>
@@ -125,29 +120,29 @@ button {
 
   <div class="topo">
     <div id="produto">PRODUTO</div>
-    <div id="peso"></div>
+    <div id="peso">1L</div>
   </div>
 
   <div class="bloco">
 
-    <div class="linha"><span class="label">CONSERVAR:</span><span class="valor" id="conservacao"></span></div>
-    <div class="linha"><span class="label">VAL. ORIGINAL:</span><span class="valor" id="val_original"></span></div>
-    <div class="linha"><span class="label">MANIPULAÇÃO:</span><span class="valor" id="manipulacao"></span></div>
-    <div class="linha"><span class="label">VALIDADE:</span><span class="valor" id="validade"></span></div>
-    <div class="linha"><span class="label">MARCA / FORN.:</span><span class="valor" id="marca"></span></div>
-    <div class="linha"><span class="label">SIF:</span><span class="valor" id="sif"></span></div>
-    <div class="linha"><span class="label">LOTE:</span><span class="valor" id="lote"></span></div>
+    <div class="linha"><span class="label">CONSERVAR:</span><span class="valor" id="conservacao">Resfriado</span></div>
+    <div class="linha"><span class="label">VAL. ORIGINAL:</span><span class="valor" id="val_original">18/04/2026 20:00</span></div>
+    <div class="linha"><span class="label">MANIPULAÇÃO:</span><span class="valor" id="manipulacao">18/03/2026 00:29</span></div>
+    <div class="linha"><span class="label">VALIDADE:</span><span class="valor" id="validade">21/03/2026 00:29</span></div>
+    <div class="linha"><span class="label">MARCA / FORN.:</span><span class="valor" id="marca">Nestle</span></div>
+    <div class="linha"><span class="label">SIF:</span><span class="valor" id="sif">2025</span></div>
+    <div class="linha"><span class="label">LOTE:</span><span class="valor" id="lote">HJ6782</span></div>
 
   </div>
 
   <div class="rodape">
     <div class="info">
-      RESP.: <span id="resp"></span><br>
+      RESP.: Luiz<br>
       CURVELLO CONFEITARIA<br>
 
       <div class="lote-conf">
         LOTE CONFEITARIA:<br>
-        <span id="lc"></span>
+        001
       </div>
     </div>
 
@@ -159,24 +154,8 @@ button {
 <button onclick="window.print()">Imprimir etiqueta</button>
 
 <script>
-const params = new URLSearchParams(window.location.search);
-
-function set(id, param) {
-  const valor = params.get(param);
-  if (valor) document.getElementById(id).innerText = valor;
-}
-
-set("produto", "produto");
-set("conservacao", "conservacao");
-set("val_original", "val_original");
-set("manipulacao", "manipulacao");
-set("validade", "validade");
-set("marca", "marca");
-set("lote", "lote");
-set("resp", "resp");
-set("lc", "lc");
-
 const url = window.location.href;
+
 document.getElementById("qr").src =
   "https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" + encodeURIComponent(url);
 </script>
