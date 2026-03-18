@@ -9,8 +9,8 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  flex-direction: column; /* 👈 corrige o botão */
+  align-items: center;
   background: #f2f2f2;
   padding-top: 20px;
 }
@@ -38,7 +38,7 @@ body {
   margin-bottom: 2px;
 }
 
-/* GRID PRINCIPAL */
+/* GRID CONTEÚDO */
 .conteudo {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -65,13 +65,13 @@ body {
   line-height: 1.2;
 }
 
-/* LOTE CONF */
+/* LOTE */
 .lote-conf {
   font-weight: 700;
   margin-top: 2px;
 }
 
-/* QR CODE FIXO */
+/* QR */
 .qrcode {
   position: absolute;
   right: 3mm;
@@ -93,8 +93,13 @@ button {
 }
 
 @media print {
-  body { background: white; padding: 0; }
-  button { display: none; }
+  body {
+    background: white;
+    padding: 0;
+  }
+  button {
+    display: none;
+  }
 }
 </style>
 </head>
