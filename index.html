@@ -16,13 +16,13 @@ body {
     margin-top: 40px;
 }
 
-/* ETIQUETA ORIGINAL (SEM MUDAR FORMATO) */
+/* ETIQUETA */
 .etiqueta {
     width: 420px;
     background: #fff;
     border: 4px solid #000;
     border-radius: 25px;
-    padding: 20px 22px;
+    padding: 20px;
     position: relative;
 }
 
@@ -33,13 +33,13 @@ body {
 }
 
 .produto {
-    font-size: 26px;
+    font-size: 24px;
     font-weight: bold;
-    margin-bottom: 12px; /* MAIS ESPAÇO */
+    margin-bottom: 12px;
 }
 
 .volume {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: bold;
 }
 
@@ -48,48 +48,45 @@ body {
     display: flex;
 }
 
-/* ESQUERDA */
+/* COLUNA ESQUERDA */
 .col-esq {
-    font-size: 14px; /* AJUSTADO */
-    line-height: 1.4;
-}
-
-.col-esq strong {
+    width: 190px; /* TRAVA SAFARI */
     font-size: 14px;
+    line-height: 1.5;
 }
 
-/* DIREITA */
+/* COLUNA DIREITA */
 .col-dir {
-    text-align: left; /* COMO VOCÊ PEDIU */
+    width: 160px; /* TRAVA SAFARI */
     font-size: 14px;
-    line-height: 1.4;
-    margin-left: 25px;
+    line-height: 1.5;
+    text-align: left;
 }
 
-/* RODAPÉ */
+/* RODAPE */
 .rodape {
-    margin-top: 12px;
+    margin-top: 10px;
     font-size: 14px;
 }
 
 .lote-conf {
-    margin-top: 6px;
     font-weight: bold;
+    margin-top: 5px;
 }
 
 /* QR */
 .qr {
     position: absolute;
-    bottom: 20px;
     right: 20px;
+    bottom: 20px;
 }
 
 .qr img {
-    width: 80px; /* AJUSTE FINO */
-    height: 80px;
+    width: 75px;
+    height: 75px;
 }
 
-/* BOTÃO */
+/* BOTAO */
 button {
     margin-top: 25px;
     padding: 18px 40px;
@@ -98,17 +95,12 @@ button {
     border: none;
     background: #333;
     color: white;
-    cursor: pointer;
 }
 
-/* IMPRESSÃO */
+/* PRINT */
 @media print {
-    body {
-        background: white;
-    }
-    button {
-        display: none;
-    }
+    button { display: none; }
+    body { background: white; }
 }
 </style>
 </head>
@@ -117,44 +109,44 @@ button {
 
 <div class="etiqueta">
 
-    <div class="topo">
-        <div id="produto" class="produto">Produto</div>
-        <div id="volume" class="volume">1L</div>
-    </div>
+<div class="topo">
+    <div id="produto" class="produto">Produto</div>
+    <div id="volume" class="volume">1L</div>
+</div>
 
-    <div class="conteudo">
+<div class="conteudo">
 
-        <div class="col-esq">
-            <div><strong>CONSERVAR:</strong></div>
-            <div><strong>VAL. ORIGINAL:</strong></div>
-            <div><strong>MANIPULAÇÃO:</strong></div>
-            <div><strong>VALIDADE:</strong></div>
-            <div><strong>MARCA / FORN.:</strong></div>
-            <div><strong>SIF:</strong></div>
-            <div><strong>LOTE:</strong></div>
-        </div>
+<div class="col-esq">
+    <div><b>CONSERVAR:</b></div>
+    <div><b>VAL. ORIGINAL:</b></div>
+    <div><b>MANIPULAÇÃO:</b></div>
+    <div><b>VALIDADE:</b></div>
+    <div><b>MARCA / FORN.:</b></div>
+    <div><b>SIF:</b></div>
+    <div><b>LOTE:</b></div>
+</div>
 
-        <div class="col-dir">
-            <div id="conservacao">Refrigerado</div>
-            <div id="val_original">00/00/0000</div>
-            <div id="manipulacao">00/00/0000 00:00</div>
-            <div id="validade">00/00/0000 00:00</div>
-            <div id="marca">Marca</div>
-            <div id="sif">0000</div>
-            <div id="lote">000</div>
-        </div>
+<div class="col-dir">
+    <div id="conservacao">Refrigerado</div>
+    <div id="val_original">-</div>
+    <div id="manipulacao">-</div>
+    <div id="validade">-</div>
+    <div id="marca">-</div>
+    <div id="sif">-</div>
+    <div id="lote">-</div>
+</div>
 
-    </div>
+</div>
 
-    <div class="rodape">
-        <div id="resp">RESP.: Luiz</div>
-        <div>CURVELLO CONFEITARIA</div>
-        <div id="lc" class="lote-conf">LOTE CONFEITARIA: 000</div>
-    </div>
+<div class="rodape">
+    <div id="resp">RESP.: Luiz</div>
+    <div>CURVELLO CONFEITARIA</div>
+    <div id="lc" class="lote-conf">LOTE CONFEITARIA: -</div>
+</div>
 
-    <div class="qr">
-        <img id="qrcode">
-    </div>
+<div class="qr">
+    <img id="qrcode">
+</div>
 
 </div>
 
@@ -162,28 +154,32 @@ button {
 
 <script>
 
-// PARAMETROS DO GLIDE
-const params = new URLSearchParams(window.location.search);
+// PEGAR PARAMETROS
+const p = new URLSearchParams(window.location.search);
 
-function set(id, param) {
-    const valor = params.get(param);
-    if (valor) document.getElementById(id).innerText = valor;
+// FUNÇÃO SEGURA
+function set(id, nome) {
+    let v = p.get(nome);
+    if (v && v !== "undefined") {
+        document.getElementById(id).innerText = v;
+    }
 }
 
-set("produto", "produto");
-set("volume", "volume");
-set("conservacao", "conservacao");
-set("val_original", "val_original");
-set("manipulacao", "manipulacao");
-set("validade", "validade");
-set("marca", "marca");
-set("sif", "sif");
-set("lote", "lote");
-set("resp", "resp");
-set("lc", "lc");
+// CAMPOS
+set("produto","produto");
+set("volume","volume");
+set("conservacao","conservacao");
+set("val_original","val_original");
+set("manipulacao","manipulacao");
+set("validade","validade");
+set("marca","marca");
+set("sif","sif");
+set("lote","lote");
+set("resp","resp");
+set("lc","lc");
 
 // QR
-const lote = params.get("lote") || "000";
+let lote = p.get("lote") || "000";
 
 document.getElementById("qrcode").src =
 "https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=" + encodeURIComponent(lote);
