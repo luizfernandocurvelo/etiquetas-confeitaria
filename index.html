@@ -15,7 +15,6 @@ body {
   padding-top: 20px;
 }
 
-/* ETIQUETA */
 .etiqueta {
   width: 60mm;
   height: 40mm;
@@ -29,7 +28,6 @@ body {
   flex-direction: column;
 }
 
-/* TOPO */
 .topo {
   display: flex;
   justify-content: space-between;
@@ -38,44 +36,39 @@ body {
   margin-bottom: 5px;
 }
 
-/* CONTEÚDO */
 .conteudo {
   display: grid;
-  grid-template-columns: 1fr 52px; /* 👈 coluna menor */
-  row-gap: 1px; /* 👈 mais compacto */
+  grid-template-columns: 1fr 52px;
+  row-gap: 1px;
   column-gap: 6px;
-  font-size: 7.6px; /* 👈 reduzido */
+  font-size: 7.6px;
   line-height: 1.1;
 }
 
-/* LABEL */
 .label {
   font-weight: 600;
   font-size: 7px;
 }
 
-/* VALOR */
+/* 👇 AQUI ESTÁ A MUDANÇA */
 .valor {
-  text-align: right;
+  text-align: left;
   white-space: nowrap;
-  font-size: 7.4px; /* 👈 reduzido */
+  font-size: 7.4px;
 }
 
-/* RODAPÉ */
 .rodape {
   margin-top: auto;
   font-size: 7.2px;
   line-height: 1.1;
-  padding-right: 48px; /* 👈 espaço real pro QR */
+  padding-right: 48px;
 }
 
-/* LOTE */
 .lote-conf {
   font-weight: 700;
   margin-top: 3px;
 }
 
-/* QR */
 .qrcode {
   position: absolute;
   right: 3mm;
@@ -84,7 +77,6 @@ body {
   height: 30px;
 }
 
-/* BOTÃO */
 button {
   margin-top: 22px;
   padding: 16px 36px;
@@ -96,7 +88,6 @@ button {
   cursor: pointer;
 }
 
-/* IMPRESSÃO */
 @media print {
   body {
     background: white;
