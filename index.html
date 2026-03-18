@@ -1,102 +1,122 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Etiqueta</title>
 
 <style>
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: #f2f2f2;
-  padding-top: 20px;
+    font-family: Arial, sans-serif;
+    background: #f2f2f2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
 }
 
+/* ETIQUETA */
 .etiqueta {
-  width: 60mm;
-  height: 40mm;
-  padding: 3mm;
-  border: 2px solid #000;
-  border-radius: 6mm;
-  background: #fff;
-  box-sizing: border-box;
-  position: relative;
-  display: flex;
-  flex-direction: column;
+    width: 420px;
+    background: #fff;
+    border: 4px solid #000;
+    border-radius: 25px;
+    padding: 20px 22px;
+    position: relative;
 }
 
-/* 👇 TOPO AGORA ALINHADO COM A COLUNA */
+/* TOPO */
 .topo {
-  display: grid;
-  grid-template-columns: 1fr 52px;
-  align-items: center;
-  font-weight: 700;
-  font-size: 13px;
-  margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
 }
 
+.produto {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.volume {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* CONTEUDO */
 .conteudo {
-  display: grid;
-  grid-template-columns: 1fr 52px;
-  row-gap: 1px;
-  column-gap: 6px;
-  font-size: 7.6px;
-  line-height: 1.1;
+    display: flex;
+    justify-content: space-between;
 }
 
-.label {
-  font-weight: 600;
-  font-size: 7px;
+/* COLUNA ESQUERDA */
+.col-esq {
+    font-size: 14px;
+    line-height: 1.6;
 }
 
-.valor {
-  text-align: left;
-  white-space: nowrap;
-  font-size: 7.4px;
+.col-esq strong {
+    font-size: 15px;
 }
 
+/* COLUNA DIREITA */
+.col-dir {
+    text-align: left;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-left: 20px;
+}
+
+/* RODAPÉ */
 .rodape {
-  margin-top: auto;
-  font-size: 7.2px;
-  line-height: 1.1;
-  padding-right: 48px;
+    margin-top: 10px;
+    font-size: 14px;
 }
 
 .lote-conf {
-  font-weight: 700;
-  margin-top: 3px;
+    margin-top: 6px;
+    font-weight: bold;
 }
 
-.qrcode {
-  position: absolute;
-  right: 3mm;
-  bottom: 3mm;
-  width: 30px;
-  height: 30px;
+/* QR CODE */
+.qr {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
 }
 
+.qr img {
+    width: 90px;
+    height: 90px;
+}
+
+/* BOTÃO */
 button {
-  margin-top: 22px;
-  padding: 16px 36px;
-  font-size: 17px;
-  border: none;
-  border-radius: 14px;
-  background: #2b2b2b;
-  color: white;
-  cursor: pointer;
+    margin-top: 25px;
+    padding: 18px 40px;
+    font-size: 20px;
+    border-radius: 16px;
+    border: none;
+    background: #333;
+    color: white;
+    cursor: pointer;
 }
 
+/* IMPRESSÃO */
 @media print {
-  body {
-    background: white;
-    padding: 0;
-  }
-  button {
-    display: none;
-  }
+    body {
+        background: white;
+    }
+
+    button {
+        display: none;
+    }
+
+    .etiqueta {
+        border: 4px solid black;
+    }
 }
 </style>
 </head>
@@ -105,42 +125,87 @@ button {
 
 <div class="etiqueta">
 
-  <div class="topo">
-    <div>Leite Integral</div>
-    <div>1L</div>
-  </div>
-
-  <div class="conteudo">
-    <div class="label">CONSERVAR:</div><div class="valor">Resfriado</div>
-    <div class="label">VAL. ORIGINAL:</div><div class="valor">10/08/2026</div>
-    <div class="label">MANIPULAÇÃO:</div><div class="valor">06/03/2026 13:30</div>
-    <div class="label">VALIDADE:</div><div class="valor">10/03/2026 13:30</div>
-    <div class="label">MARCA / FORN.:</div><div class="valor">Nestle</div>
-    <div class="label">SIF:</div><div class="valor">2025</div>
-    <div class="label">LOTE:</div><div class="valor">HJ6782</div>
-  </div>
-
-  <div class="rodape">
-    RESP.: Luiz<br>
-    CURVELLO CONFEITARIA
-
-    <div class="lote-conf">
-      LOTE CONFEITARIA: 31411
+    <!-- TOPO -->
+    <div class="topo">
+        <div>
+            <div id="produto" class="produto">Produto</div>
+        </div>
+        <div id="volume" class="volume">1L</div>
     </div>
-  </div>
 
-  <img id="qr" class="qrcode">
+    <!-- CONTEÚDO -->
+    <div class="conteudo">
+
+        <!-- ESQUERDA -->
+        <div class="col-esq">
+            <div><strong>CONSERVAR:</strong></div>
+            <div><strong>VAL. ORIGINAL:</strong></div>
+            <div><strong>MANIPULAÇÃO:</strong></div>
+            <div><strong>VALIDADE:</strong></div>
+            <div><strong>MARCA / FORN.:</strong></div>
+            <div><strong>SIF:</strong></div>
+            <div><strong>LOTE:</strong></div>
+        </div>
+
+        <!-- DIREITA -->
+        <div class="col-dir">
+            <div id="conservacao">Refrigerado</div>
+            <div id="val_original">00/00/0000</div>
+            <div id="manipulacao">00/00/0000 00:00</div>
+            <div id="validade">00/00/0000 00:00</div>
+            <div id="marca">Marca</div>
+            <div id="sif">0000</div>
+            <div id="lote">000</div>
+        </div>
+
+    </div>
+
+    <!-- RODAPÉ -->
+    <div class="rodape">
+        <div id="resp">RESP.: Luiz</div>
+        <div>CURVELLO CONFEITARIA</div>
+        <div class="lote-conf" id="lc">LOTE CONFEITARIA: 000</div>
+    </div>
+
+    <!-- QR CODE -->
+    <div class="qr">
+        <img id="qrcode" src="">
+    </div>
 
 </div>
 
 <button onclick="window.print()">Imprimir etiqueta</button>
 
+<!-- SCRIPT -->
 <script>
-const url = window.location.href;
 
-document.getElementById("qr").src =
-  "https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" +
-  encodeURIComponent(url);
+// PEGAR PARAMETROS DA URL
+const params = new URLSearchParams(window.location.search);
+
+function set(id, param) {
+    const valor = params.get(param);
+    if (valor) document.getElementById(id).innerText = valor;
+}
+
+// CAMPOS
+set("produto", "produto");
+set("volume", "volume");
+set("conservacao", "conservacao");
+set("val_original", "val_original");
+set("manipulacao", "manipulacao");
+set("validade", "validade");
+set("marca", "marca");
+set("sif", "sif");
+set("lote", "lote");
+set("resp", "resp");
+set("lc", "lc");
+
+// GERAR QR CODE COM LOTE
+const lote = params.get("lote") || "000";
+
+document.getElementById("qrcode").src =
+    "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + encodeURIComponent(lote);
+
 </script>
 
 </body>
