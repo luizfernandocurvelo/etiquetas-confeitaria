@@ -1,0 +1,16 @@
+[
+  {
+    "id": "001",
+    "produto": "Leite Integral",
+    "volume": "1L",
+    "conservacao": "Refrigerado",
+    "val_original": "18/04/2026 20:00",
+    "manipulacao": "18/03/2026 0:29",
+    "validade": "21/03/2026 0:29",
+    "marca": "Nestle",
+    "sif": "-",
+    "lote": "HJ6782",
+    "responsavel": "Luiz",
+    "lote_conf": "001"
+  }
+]
