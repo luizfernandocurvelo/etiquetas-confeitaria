@@ -1,101 +1,78 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
 <meta charset="UTF-8">
 <title>Etiqueta</title>
 
 <style>
 body {
-  margin: 0;
   font-family: Arial, sans-serif;
+  background: #eee;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #f2f2f2;
-  padding-top: 20px;
 }
 
 .etiqueta {
-  width: 60mm;
-  height: 40mm;
-  padding: 3mm;
-  border: 2px solid #000;
-  border-radius: 6mm;
+  width: 420px;
+  height: 220px;
   background: #fff;
+  border: 3px solid #000;
+  border-radius: 20px;
+  padding: 15px;
   box-sizing: border-box;
   position: relative;
-  display: flex;
-  flex-direction: column;
 }
 
 .topo {
-  display: grid;
-  grid-template-columns: 1fr 52px;
-  align-items: center;
-  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+}
+
+.produto {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.volume {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.linhas {
+  margin-top: 5px;
   font-size: 13px;
-  margin-bottom: 5px;
 }
 
-.conteudo {
-  display: grid;
-  grid-template-columns: 1fr 52px;
-  row-gap: 1px;
-  column-gap: 6px;
-  font-size: 7.6px;
-  line-height: 1.1;
-}
-
-.label {
-  font-weight: 600;
-  font-size: 7px;
-}
-
-.valor {
-  text-align: left;
-  white-space: nowrap;
-  font-size: 7.4px;
+.linhas b {
+  display: inline-block;
+  width: 130px;
 }
 
 .rodape {
-  margin-top: auto;
-  font-size: 7.2px;
-  line-height: 1.1;
-  padding-right: 48px;
-}
-
-.lote-conf {
-  font-weight: 700;
-  margin-top: 3px;
+  position: absolute;
+  bottom: 10px;
+  left: 15px;
+  font-size: 13px;
 }
 
 .qrcode {
   position: absolute;
-  right: 4mm;
-  bottom: 2mm;
-  width: 40px;
-  height: 40px;
+  bottom: 10px;
+  right: 15px;
+  width: 90px;
+  height: 90px;
 }
 
 button {
-  margin-top: 22px;
-  padding: 16px 36px;
-  font-size: 17px;
+  margin-top: 30px;
+  padding: 20px 40px;
+  font-size: 22px;
+  border-radius: 20px;
   border: none;
-  border-radius: 14px;
-  background: #2b2b2b;
+  background: #333;
   color: white;
   cursor: pointer;
-}
-
-@media print {
-  body {
-    background: white;
-    padding: 0;
-  }
-  button {
-    display: none;
-  }
 }
 </style>
 </head>
@@ -105,27 +82,24 @@ button {
 <div class="etiqueta">
 
   <div class="topo">
-    <div id="produto">Produto</div>
-    <div id="volume">1L</div>
+    <div class="produto" id="produto">Produto</div>
+    <div class="volume" id="volume">1L</div>
   </div>
 
-  <div class="conteudo">
-    <div class="label">CONSERVAR:</div><div class="valor">Refrigerado</div>
-    <div class="label">VAL. ORIGINAL:</div><div class="valor" id="val_original"></div>
-    <div class="label">MANIPULAÇÃO:</div><div class="valor" id="manipulacao"></div>
-    <div class="label">VALIDADE:</div><div class="valor" id="validade"></div>
-    <div class="label">MARCA / FORN.:</div><div class="valor" id="marca"></div>
-    <div class="label">SIF:</div><div class="valor" id="sif"></div>
-    <div class="label">LOTE:</div><div class="valor" id="lote"></div>
+  <div class="linhas">
+    <div><b>CONSERVAR:</b> <span id="conservacao"></span></div>
+    <div><b>VAL. ORIGINAL:</b> <span id="val_original"></span></div>
+    <div><b>MANIPULAÇÃO:</b> <span id="manipulacao"></span></div>
+    <div><b>VALIDADE:</b> <span id="validade"></span></div>
+    <div><b>MARCA / FORN.:</b> <span id="marca"></span></div>
+    <div><b>SIF:</b> <span id="sif"></span></div>
+    <div><b>LOTE:</b> <span id="lote"></span></div>
   </div>
 
   <div class="rodape">
-    RESP.: <span id="resp"></span><br>
-    CURVELLO CONFEITARIA
-
-    <div class="lote-conf">
-      LOTE CONFEITARIA: <span id="lote_conf"></span>
-    </div>
+    <div>RESP.: <span id="responsavel"></span></div>
+    <div>CURVELLO CONFEITARIA</div>
+    <div><b>LOTE CONFEITARIA: <span id="lote_conf"></span></b></div>
   </div>
 
   <img id="qr" class="qrcode">
@@ -135,45 +109,29 @@ button {
 <button onclick="window.print()">Imprimir etiqueta</button>
 
 <script>
-// 🔹 pegar parâmetros da URL
+// pegar parâmetros da URL
 const params = new URLSearchParams(window.location.search);
-  const id = params.get("id");
-  console.log("ID recebido:", id);
 
-// 🔹 função para remover vírgula das datas
-function formatarData(valor) {
-  if (!valor) return "-";
-  return valor.replace(",", "");
-}
+// preencher dados
+document.getElementById("produto").textContent = params.get("produto") || "-";
+document.getElementById("volume").textContent = params.get("volume") || "1L";
+document.getElementById("conservacao").textContent = params.get("conservacao") || "-";
+document.getElementById("val_original").textContent = params.get("val_original") || "-";
+document.getElementById("manipulacao").textContent = params.get("manipulacao") || "-";
+document.getElementById("validade").textContent = params.get("validade") || "-";
+document.getElementById("marca").textContent = params.get("marca") || "-";
+document.getElementById("sif").textContent = params.get("sif") || "-";
+document.getElementById("lote").textContent = params.get("lote") || "-";
+document.getElementById("responsavel").textContent = params.get("resp") || "-";
+document.getElementById("lote_conf").textContent = params.get("lote_conf") || "-";
 
-// 🔹 preencher dados
-fetch("dados.json")
-  .then(response => response.json())
-  .then(data => {
-    const item = data.find(d => d.id === id);
+// QR CODE (LEVE E FUNCIONAL)
+const qrUrl = window.location.origin + window.location.pathname + "?id=" + (params.get("lote_conf") || "001");
 
-    if (!item) return;
-
-    document.getElementById("produto").textContent = item.produto || "-";
-    document.getElementById("volume").textContent = item.volume || "1L";
-
-    document.getElementById("conservacao").textContent = item.conservacao || "-";
-    document.getElementById("val_original").textContent = formatarData(item.val_original);
-    document.getElementById("manipulacao").textContent = formatarData(item.manipulacao);
-    document.getElementById("validade").textContent = formatarData(item.validade);
-    document.getElementById("marca").textContent = item.marca || "-";
-    document.getElementById("sif").textContent = item.sif || "-";
-    document.getElementById("lote").textContent = item.lote || "-";
-
-    document.getElementById("responsavel").textContent = item.responsavel || "-";
-    document.getElementById("lote_conf").textContent = item.lote_conf || "-";
-  });
-  
-// 🔹 QR Code
-const url = window.location.href + "&t=" + new Date().getTime();
 document.getElementById("qr").src =
-  "https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" +
-  encodeURIComponent(url);
+  "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" +
+  encodeURIComponent(qrUrl);
+
 </script>
 
 </body>
