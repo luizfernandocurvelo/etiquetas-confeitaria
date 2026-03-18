@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -25,16 +24,22 @@ body {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  position: relative;
 }
 
 /* TOPO */
 .topo {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-weight: bold;
   font-size: 13px;
-  margin-bottom: 3px;
+  margin-bottom: 2px;
+}
+
+/* PRODUTO MAIS FORTE */
+#produto {
+  font-weight: 800;
+  letter-spacing: 0.3px;
 }
 
 /* LINHAS */
@@ -42,7 +47,7 @@ body {
   display: flex;
   justify-content: space-between;
   font-size: 9px;
-  margin: 1px 0;
+  margin: 2px 0;
 }
 
 .label {
@@ -61,24 +66,27 @@ body {
 
 /* RODAPÉ */
 .rodape {
-  font-size: 8.5px;
-  line-height: 1.25;
-  padding-right: 34px; /* 👈 espaço pro QR */
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 2px;
 }
 
-/* LOTE CONF */
+.info {
+  font-size: 8.8px;
+  line-height: 1.2;
+}
+
 .lote-conf {
   font-weight: bold;
-  margin-top: 3px;
+  margin-top: 2px;
 }
 
-/* QR FIXO */
+/* QR */
 .qrcode {
-  position: absolute;
-  bottom: 4px;
-  right: 4px;
-  width: 26px;
-  height: 26px;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 4px;
 }
 
 /* BOTÃO */
@@ -93,9 +101,19 @@ button {
   cursor: pointer;
 }
 
+/* IMPRESSÃO */
 @media print {
-  body { background: white; }
-  button { display: none; }
+  body {
+    background: white;
+  }
+
+  button {
+    display: none;
+  }
+
+  .etiqueta {
+    border: 2px solid black;
+  }
 }
 </style>
 </head>
@@ -105,41 +123,61 @@ button {
 <div class="etiqueta">
 
   <div class="topo">
-    <div>Leite Integral</div>
-    <div>1L</div>
+    <div id="produto">PRODUTO</div>
+    <div id="peso"></div>
   </div>
 
   <div class="bloco">
-    <div class="linha"><span class="label">CONSERVAR:</span><span class="valor">Resfriado</span></div>
-    <div class="linha"><span class="label">VAL. ORIGINAL:</span><span class="valor">10/08/2026</span></div>
-    <div class="linha"><span class="label">MANIPULAÇÃO:</span><span class="valor">06/03/2026 13:30</span></div>
-    <div class="linha"><span class="label">VALIDADE:</span><span class="valor">10/03/2026 13:30</span></div>
-    <div class="linha"><span class="label">MARCA / FORN.:</span><span class="valor">Nestle</span></div>
-    <div class="linha"><span class="label">SIF:</span><span class="valor">2025</span></div>
-    <div class="linha"><span class="label">LOTE:</span><span class="valor">HJ6782</span></div>
+
+    <div class="linha"><span class="label">CONSERVAR:</span><span class="valor" id="conservacao"></span></div>
+    <div class="linha"><span class="label">VAL. ORIGINAL:</span><span class="valor" id="val_original"></span></div>
+    <div class="linha"><span class="label">MANIPULAÇÃO:</span><span class="valor" id="manipulacao"></span></div>
+    <div class="linha"><span class="label">VALIDADE:</span><span class="valor" id="validade"></span></div>
+    <div class="linha"><span class="label">MARCA / FORN.:</span><span class="valor" id="marca"></span></div>
+    <div class="linha"><span class="label">SIF:</span><span class="valor" id="sif"></span></div>
+    <div class="linha"><span class="label">LOTE:</span><span class="valor" id="lote"></span></div>
+
   </div>
 
   <div class="rodape">
-    RESP.: Luiz<br>
-    CURVELLO CONFEITARIA<br>
+    <div class="info">
+      RESP.: <span id="resp"></span><br>
+      CURVELLO CONFEITARIA<br>
 
-    <div class="lote-conf">
-      LOTE CONFEITARIA: 31411
+      <div class="lote-conf">
+        LOTE CONFEITARIA:<br>
+        <span id="lc"></span>
+      </div>
     </div>
-  </div>
 
-  <img id="qr" class="qrcode">
+    <img id="qr" class="qrcode">
+  </div>
 
 </div>
 
 <button onclick="window.print()">Imprimir etiqueta</button>
 
 <script>
-const url = window.location.href;
+const params = new URLSearchParams(window.location.search);
 
+function set(id, param) {
+  const valor = params.get(param);
+  if (valor) document.getElementById(id).innerText = valor;
+}
+
+set("produto", "produto");
+set("conservacao", "conservacao");
+set("val_original", "val_original");
+set("manipulacao", "manipulacao");
+set("validade", "validade");
+set("marca", "marca");
+set("lote", "lote");
+set("resp", "resp");
+set("lc", "lc");
+
+const url = window.location.href;
 document.getElementById("qr").src =
-  "https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=" +
-  encodeURIComponent(url);
+  "https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" + encodeURIComponent(url);
 </script>
 
 </body>
