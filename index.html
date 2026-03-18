@@ -19,7 +19,7 @@ body {
 .etiqueta {
   width: 60mm;
   height: 40mm;
-  padding: 3mm;
+  padding: 2.5mm;
   border: 2px solid #000;
   border-radius: 6mm;
   background: #fff;
@@ -34,18 +34,18 @@ body {
   display: flex;
   justify-content: space-between;
   font-weight: 700;
-  font-size: 13px;
-  margin-bottom: 4px;
+  font-size: 12px;
+  margin-bottom: 2px;
 }
 
 /* CONTEÚDO */
 .conteudo {
   display: grid;
-  grid-template-columns: 1fr 58px; /* 👈 alinhamento mais fino */
-  row-gap: 2px;
-  column-gap: 8px;
-  font-size: 8.4px;
-  line-height: 1.2;
+  grid-template-columns: 1fr 65px; /* 👈 largura fixa profissional */
+  row-gap: 1px; /* 👈 mais compacto */
+  column-gap: 6px;
+  font-size: 8.2px;
+  line-height: 1.15;
 }
 
 /* LABEL */
@@ -62,39 +62,37 @@ body {
 /* RODAPÉ */
 .rodape {
   margin-top: auto;
-  font-size: 7.8px;
-  line-height: 1.2;
-  padding-right: 34px; /* 👈 espaço real pro QR */
+  font-size: 7.5px;
+  line-height: 1.15;
 }
 
 /* LOTE */
 .lote-conf {
   font-weight: 700;
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 /* QR */
 .qrcode {
   position: absolute;
-  right: 3mm;
-  bottom: 3mm;
+  right: 3.5mm;
+  bottom: 3.5mm;
   width: 24px;
   height: 24px;
 }
 
 /* BOTÃO */
 button {
-  margin-top: 22px;
-  padding: 16px 36px;
-  font-size: 17px;
+  margin-top: 18px;
+  padding: 12px 28px;
+  font-size: 15px;
   border: none;
-  border-radius: 14px;
+  border-radius: 10px;
   background: #2b2b2b;
   color: white;
   cursor: pointer;
 }
 
-/* IMPRESSÃO */
 @media print {
   body {
     background: white;
@@ -145,7 +143,7 @@ button {
 const url = window.location.href;
 
 document.getElementById("qr").src =
-  "https://api.qrserver.com/v1/create-qr-code/?size=70x70&data=" +
+  "https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=" +
   encodeURIComponent(url);
 </script>
 
