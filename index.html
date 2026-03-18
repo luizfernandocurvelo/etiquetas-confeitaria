@@ -28,7 +28,6 @@ body {
   flex-direction: column;
 }
 
-/* 👇 TOPO AGORA ALINHADO COM A COLUNA */
 .topo {
   display: grid;
   grid-template-columns: 1fr 52px;
@@ -74,8 +73,8 @@ body {
   position: absolute;
   right: 3mm;
   bottom: 3mm;
-  width: 30px;
-  height: 30px;
+  width: 42px;
+  height: 42px;
 }
 
 button {
@@ -106,25 +105,25 @@ button {
 <div class="etiqueta">
 
   <div class="topo">
-    <div>Leite Integral</div>
-    <div>1L</div>
+    <div id="produto">Leite Integral</div>
+    <div id="volume">1L</div>
   </div>
 
   <div class="conteudo">
-    <div class="label">CONSERVAR:</div><div class="valor">Refrigerado</div>
-    <div class="label">VAL. ORIGINAL:</div><div class="valor">10/08/2026</div>
-    <div class="label">MANIPULAÇÃO:</div><div class="valor">06/03/2026 13:30</div>
-    <div class="label">VALIDADE:</div><div class="valor">10/03/2026 13:30</div>
-    <div class="label">MARCA / FORN.:</div><div class="valor">Nestle</div>
-    <div class="label">SIF:</div><div class="valor">2025</div>
-    <div class="label">LOTE:</div><div class="valor">HJ6782</div>
+    <div class="label">CONSERVAR:</div><div class="valor" id="conservacao">Refrigerado</div>
+    <div class="label">VAL. ORIGINAL:</div><div class="valor" id="val_original">10/08/2026</div>
+    <div class="label">MANIPULAÇÃO:</div><div class="valor" id="manipulacao">06/03/2026 13:30</div>
+    <div class="label">VALIDADE:</div><div class="valor" id="validade">10/03/2026 13:30</div>
+    <div class="label">MARCA / FORN.:</div><div class="valor" id="marca">Nestle</div>
+    <div class="label">SIF:</div><div class="valor" id="sif">2025</div>
+    <div class="label">LOTE:</div><div class="valor" id="lote">HJ6782</div>
   </div>
 
   <div class="rodape">
-    RESP.: Luiz<br>
+    <div id="resp">RESP.: Luiz</div>
     CURVELLO CONFEITARIA
 
-    <div class="lote-conf">
+    <div class="lote-conf" id="lote_conf">
       LOTE CONFEITARIA: 31411
     </div>
   </div>
@@ -136,6 +135,33 @@ button {
 <button onclick="window.print()">Imprimir etiqueta</button>
 
 <script>
+const p = new URLSearchParams(window.location.search);
+
+function get(nome, padrao="") {
+  return p.get(nome) || padrao;
+}
+
+document.getElementById("produto").innerText = get("produto", "Leite Integral");
+document.getElementById("volume").innerText = get("volume", "1L");
+
+// FIXO
+document.getElementById("conservacao").innerText = "Refrigerado";
+
+// DADOS
+document.getElementById("val_original").innerText = get("val_original", "10/08/2026");
+document.getElementById("manipulacao").innerText = get("manipulacao", "06/03/2026 13:30");
+document.getElementById("validade").innerText = get("validade", "10/03/2026 13:30");
+document.getElementById("marca").innerText = get("marca", "Nestle");
+document.getElementById("sif").innerText = get("sif", "2025");
+document.getElementById("lote").innerText = get("lote", "HJ6782");
+
+// RODAPÉ
+document.getElementById("resp").innerText = "RESP.: " + get("resp", "Luiz");
+
+document.getElementById("lote_conf").innerText =
+  "LOTE CONFEITARIA: " + get("lote_conf", "31411");
+
+// QR CODE
 const url = window.location.href;
 
 document.getElementById("qr").src =
